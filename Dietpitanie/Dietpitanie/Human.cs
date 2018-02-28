@@ -10,7 +10,6 @@ namespace Dietpitanie
     {
         public double Height { get; set; }
         public double Weight { get; set; }
-        //public string Sex { get; set; }
         public double Index { get; set; }
 
 
@@ -18,7 +17,6 @@ namespace Dietpitanie
         {
             Height = (height/100);
             Weight = weight;
-            //Sex = sex;
         }
 
         public void CalcuteIndex()
