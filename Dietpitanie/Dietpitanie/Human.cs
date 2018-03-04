@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dietpitanie
+﻿namespace Dietpitanie
 {
     internal class Human
     {
@@ -28,17 +22,17 @@ namespace Dietpitanie
         {
             if (Index < 16)
                 return "Выраженный дефицит массы тела";
-            else if (Index < 18.5 && Index > 16)
-                    return "Дефицит массы тела";
-                else if (Index >= 18.5 && Index < 25)
-                        return "Нормальный вес";
-                    else if (Index >= 25 && Index < 30)
-                            return "Предожирение";
-                        else if (Index >= 30 && Index < 35)
-                                return "Ожирение 1 степени";
-                            else if (Index >= 35 && Index < 40)
-                                    return "Ожирение 2 степени";
-                                else return "Ожирение 3 степени";
+            if (Index < 18.5 && Index > 16)
+                return "Дефицит массы тела";
+            if (Index >= 18.5 && Index < 25)
+                return "Нормальный вес";
+            if (Index >= 25 && Index < 30)
+                return "Предожирение";
+            if (Index >= 30 && Index < 35)
+                return "Ожирение 1 степени";
+            if (Index >= 35 && Index < 40)
+                return "Ожирение 2 степени";
+            return "Ожирение 3 степени";
         }
     }
 }
