@@ -114,11 +114,11 @@ namespace Dietpitanie
                 proteins = Convert.ToDouble(weight.Text) * 1.2 ;
                 fats = Convert.ToDouble(weight.Text) * 0.5 ;
                 carbohydrates = (BMR - proteins * 4 - fats * 9) / 4;
-                textBox2.Text = proteins.ToString();
-                textBox5.Text = fats.ToString();
-                textBox7.Text = carbohydrates.ToString();
-                textBox9.Text = BMR.ToString();
-                result_calories.Text = BMR.ToString();
+                textBox2.Text = proteins.ToString()+" г. белков";
+                textBox5.Text = fats.ToString() + " г. жиров";
+                textBox7.Text = carbohydrates.ToString()+" г. углеводов";
+                textBox9.Text = BMR.ToString() + " ккал";
+                result_calories.Text = BMR.ToString()+" ккал";
                 
             }
             else result.Text = "Input data again";
@@ -128,11 +128,6 @@ namespace Dietpitanie
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             DB.Close();
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,7 +157,7 @@ namespace Dietpitanie
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 1)
+            if (listView1.SelectedItems.Count == 1 && textBox1.Text.Length!=0)
             {
                 ListViewItem item = new ListViewItem(listView1.Items[listView1.SelectedIndices[0]].SubItems[0].Text);
                 item.SubItems.Add(textBox1.Text);
@@ -175,10 +170,11 @@ namespace Dietpitanie
                 fats += ((Convert.ToDouble(textBox1.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[2].Text));
                 carbohydrates += ((Convert.ToDouble(textBox1.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[3].Text));
                 calories += ((Convert.ToDouble(textBox1.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[4].Text));
-                textBox8.Text = proteins.ToString();
-                textBox3.Text = fats.ToString();
-                textBox4.Text = carbohydrates.ToString();
-                textBox6.Text = calories.ToString();
+                textBox8.Text = proteins.ToString() + " г. белков";
+                textBox3.Text = fats.ToString() + " г. жиров";
+                textBox4.Text = carbohydrates.ToString() + " г. углеводов";
+                textBox6.Text = calories.ToString() + " ккал";
+                textBox1.Clear();
             }
         }
 
@@ -191,10 +187,10 @@ namespace Dietpitanie
                 carbohydrates -= (Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[5].Text));
                 calories -= (Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[2].Text));
                 listView2.Items.Remove(listView2.Items[listView2.SelectedIndices[0]]);
-                textBox8.Text = proteins.ToString();
-                textBox3.Text = fats.ToString();
-                textBox4.Text = carbohydrates.ToString();
-                textBox6.Text = calories.ToString();
+                textBox8.Text = proteins.ToString() + " г. белков";
+                textBox3.Text = fats.ToString() + " г. жиров";
+                textBox4.Text = carbohydrates.ToString() + " г. углеводов";
+                textBox6.Text = calories.ToString() + " ккал";
             }
             
         }
