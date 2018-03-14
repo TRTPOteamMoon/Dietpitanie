@@ -45,7 +45,7 @@ namespace Dietpitanie
             return "Ожирение 3 степени";
         }
 
-        public void CalculateBmr(string activity1Type,string activity2Type, double time)
+        public void CalculateBmr(string activity1Type,string activity2Type, string time)
         {
             Bmr = 9.99 * Weight + 6.25 * Height - 4.95 * Age;
             if (Sex==1)
@@ -76,29 +76,40 @@ namespace Dietpitanie
                     break;
             }
 
-            if (time > 0)
+            double Time;
+            if (time.Length == 0)
+            {
+                Time = 0;
+            }
+            else
+            {
+                Time = double.Parse(time);
+            } 
+            
+            
+            if (Time > 0)
             {
                 switch (activity2Type)
                 {
                     case "ничего":
                         break;
                     case "велоспорт":
-                        Bmr += 660 * time / 60;
+                        Bmr += 660 * Time / 60;
                         break;
                     case "бег трусцой":
-                        Bmr += 600 * time / 60;
+                        Bmr += 600 * Time / 60;
                         break;
                     case "волейбол":
-                        Bmr += 350 * time / 60;
+                        Bmr += 350 * Time / 60;
                         break;
                     case "гимнастика":
-                        Bmr += 440 * time / 60;
+                        Bmr += 440 * Time / 60;
                         break;
                     case "катание на коньках":
-                        Bmr += 400 * time / 60;
+                        Bmr += 400 * Time / 60;
                         break;
                     case " плавние":
-                        Bmr += 350 * time / 60;
+                        Bmr += 350 * Time / 60;
                         break;
                 }
             }
