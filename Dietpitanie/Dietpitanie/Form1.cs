@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Dietpitanie
@@ -18,8 +19,13 @@ namespace Dietpitanie
             InitializeComponent();
         }
 
-        public void Form1_Load(object sender, EventArgs e)
+        public void MainWindowLoad(object sender, EventArgs e)
         {
+            weightLabel.Text = "";
+            heightLabel.Text = "";
+            ageLabel.Text = "";
+            resultLabel.Text = "";
+            caloriesLabel.Text = "";
             buttonCalculate.Enabled = true;
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             location = location.Remove(location.Length - 25);
@@ -54,19 +60,58 @@ namespace Dietpitanie
                 }
                 _human.CalcuteIndex();
                 _human.CalculateBmr(activity1.Text,activity2.Text,activity2Time.Text);
-                result.Text = _human.CompareIndex();
+                resultLabel.Text = _human.CompareIndex();
                 textBox2.Text = _human.Proteins+@" г. белков";
                 textBox5.Text = _human.Fats + @" г. жиров";
                 textBox7.Text = _human.Carbohydrates+@" г. углеводов";
                 textBox9.Text = _human.Bmr + @" ккал";
-                result_calories.Text = _human.Bmr+@" ккал";
+                caloriesLabel.Text = _human.Bmr+@" ккал";
                 
             }
-            else result.Text = @"Input data again";
+            else resultLabel.Text = @"Input data again";
 
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void height_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(height.Text)||height.Text.Length==0)
+            {
+                heightLabel.Text = @"";
+            }
+            else
+            {
+                heightLabel.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void weight_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(weight.Text) || weight.Text.Length == 0)
+            {
+                weightLabel.Text = @"";
+            }
+            else
+            {
+                weightLabel.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void age_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(age.Text) || age.Text.Length == 0)
+            {
+                ageLabel.Text = @"";
+            }
+            else
+            {
+                ageLabel.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void MainWindowClosed(object sender, FormClosedEventArgs e)
         {
             DB.Close();
         }

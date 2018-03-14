@@ -17,7 +17,7 @@ namespace Dietpitanie
 
         public Human (double height, double weight, double age, int sex)
         {
-            Height = (height/100);
+            Height = height;
             Weight = weight;
             Age = age;
             Sex = sex;
@@ -25,7 +25,7 @@ namespace Dietpitanie
 
         public void CalcuteIndex()
         {
-            Index = Weight / (Height * Height);
+            Index = Weight / (Height/100 * Height/100);
         }
 
         public string CompareIndex()
