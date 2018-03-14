@@ -7,13 +7,13 @@ using System.Windows.Forms;
 
 namespace Dietpitanie
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
 
-        private Human human;
+        private Human _human;
         private double proteins, fats, carbohydrates, calories,BMR;
         private SQLiteConnection DB;
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
         }
@@ -39,86 +39,25 @@ namespace Dietpitanie
         }
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            if (height.Text.Length > 0 && weight.Text.Length > 0 && age.Text.Length > 0 && (gender_female.Checked || gender_male.Checked))
+            if (height.Text.Length > 0 && weight.Text.Length > 0 && age.Text.Length > 0 &&
+                (gender_female.Checked || gender_male.Checked))
             {
-                human = new Human(float.Parse(height.Text), float.Parse(weight.Text));
-                human.CalcuteIndex();
-                result.Text = human.CompareIndex();
-                BMR = 9.99 * Convert.ToDouble(weight.Text) + 
-                      6.25 * Convert.ToDouble(height.Text) -
-                      4.95 * Convert.ToDouble(age.Text);
                 if (gender_male.Checked)
                 {
-                    BMR += 5;
+                    _human = new Human(double.Parse(height.Text), double.Parse(weight.Text), double.Parse(age.Text),1);
                 }
                 else
                 {
-                    BMR -= 161;
+                    _human = new Human(double.Parse(height.Text), double.Parse(weight.Text), double.Parse(age.Text), 0);
                 }
-
-                string activity1_type = activity1.Text;
-                switch (activity1_type)
-                {
-                    case "сидячая работа, отсутствие спорта":
-                        BMR = BMR * 1.2;
-                        break;
-                    case "легкие физические упражнения около 3 раз за неделю, ежедневная утренняя зарядка, пешие прогулки":
-                        BMR = BMR * 1.35;
-                        break;
-                    case "спорт до 5 раз за неделю":
-                        BMR = BMR * 1.55;
-                        break;
-                    case "активный образ жизни вкупе с ежедневными интенсивными тренировками":
-                        BMR = BMR * 1.75;
-                        break;
-                    case "спортивный образ жизни, тяжелый физический труд, длительные тяжелые тренировки каждый день":
-                        BMR = BMR * 1.95;
-                        break;
-                }
-
-                string activity2_type = activity2.Text;
-                double time;
-                if (activity2_time.Text.Length == 0)
-                {
-                    time = 0;
-                }
-                else
-                {
-                    time = Convert.ToDouble(activity2_time.Text);
-                }
-                switch (activity2_type)
-                {
-                    case "ничего":
-                        break;
-                    case "велоспорт":
-                        BMR += 660 * time / 60;
-                        break;
-                    case "бег трусцой":
-                        BMR += 600 * time / 60;
-                        break;
-                    case "волейбол":
-                        BMR += 350 * time / 60;
-                        break;
-                    case "гимнастика":
-                        BMR += 440 * time / 60;
-                        break;
-                    case "катание на коньках":
-                        BMR += 400 * time / 60;
-                        break;
-                    case " плавние":
-                        BMR += 350 * time / 60;
-                        break;
-            }
-
-                double proteins, fats, carbohydrates;
-                proteins = Convert.ToDouble(weight.Text) * 1.2 ;
-                fats = Convert.ToDouble(weight.Text) * 0.5 ;
-                carbohydrates = (BMR - proteins * 4 - fats * 9) / 4;
-                textBox2.Text = proteins.ToString()+" г. белков";
-                textBox5.Text = fats.ToString() + " г. жиров";
-                textBox7.Text = carbohydrates.ToString()+" г. углеводов";
-                textBox9.Text = BMR.ToString() + " ккал";
-                result_calories.Text = BMR.ToString()+" ккал";
+                _human.CalcuteIndex();
+                _human.CalculateBmr(activity1.Text,activity2.Text,double.Parse(activity2Time.Text));
+                result.Text = _human.CompareIndex();
+                textBox2.Text = _human.Proteins+" г. белков";
+                textBox5.Text = _human.Fats + " г. жиров";
+                textBox7.Text = _human.Carbohydrates+" г. углеводов";
+                textBox9.Text = _human.Bmr + " ккал";
+                result_calories.Text = _human.Bmr+" ккал";
                 
             }
             else result.Text = "Input data again";

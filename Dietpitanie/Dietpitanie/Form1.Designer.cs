@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Dietpitanie
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -72,7 +72,7 @@ namespace Dietpitanie
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.activity2_time = new System.Windows.Forms.TextBox();
+            this.activity2Time = new System.Windows.Forms.TextBox();
             this.activity2 = new System.Windows.Forms.ComboBox();
             this.activity1 = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
@@ -228,7 +228,7 @@ namespace Dietpitanie
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.activity2_time);
+            this.tabPage2.Controls.Add(this.activity2Time);
             this.tabPage2.Controls.Add(this.activity2);
             this.tabPage2.Controls.Add(this.activity1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -467,12 +467,12 @@ namespace Dietpitanie
             // 
             this.columnHeader11.Text = "Углеводы";
             // 
-            // activity2_time
+            // activity2Time
             // 
-            this.activity2_time.Location = new System.Drawing.Point(301, 82);
-            this.activity2_time.Name = "activity2_time";
-            this.activity2_time.Size = new System.Drawing.Size(255, 20);
-            this.activity2_time.TabIndex = 19;
+            this.activity2Time.Location = new System.Drawing.Point(301, 82);
+            this.activity2Time.Name = "activity2Time";
+            this.activity2Time.Size = new System.Drawing.Size(255, 20);
+            this.activity2Time.TabIndex = 19;
             // 
             // activity2
             // 
@@ -514,7 +514,7 @@ namespace Dietpitanie
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 543);
             this.Controls.Add(this.tabControl1);
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "Dietpitanie";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -560,7 +560,7 @@ namespace Dietpitanie
         private TextBox textBox1;
         private Button button1;
         private ComboBox comboBox1;
-        private TextBox activity2_time;
+        private TextBox activity2Time;
         private ComboBox activity2;
         private ComboBox activity1;
         private ListView listView2;
