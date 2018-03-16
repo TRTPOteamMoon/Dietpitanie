@@ -56,6 +56,9 @@ namespace Dietpitanie
             this.activity2 = new System.Windows.Forms.ComboBox();
             this.activity1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkToEatWeight = new System.Windows.Forms.Label();
+            this.eatLabel = new System.Windows.Forms.Label();
+            this.toEatLabel = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -88,7 +91,7 @@ namespace Dietpitanie
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonEject = new System.Windows.Forms.Button();
             this.normCarbohydrates = new System.Windows.Forms.TextBox();
             this.normFats = new System.Windows.Forms.TextBox();
             this.eatFats = new System.Windows.Forms.TextBox();
@@ -98,11 +101,8 @@ namespace Dietpitanie
             this.eatCalories = new System.Windows.Forms.TextBox();
             this.normCalories = new System.Windows.Forms.TextBox();
             this.toEatWeight = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonEat = new System.Windows.Forms.Button();
             this.foodType = new System.Windows.Forms.ComboBox();
-            this.toEatLabel = new System.Windows.Forms.Label();
-            this.eatLabel = new System.Windows.Forms.Label();
-            this.checkToEatWeight = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.genderbox.SuspendLayout();
@@ -399,7 +399,7 @@ namespace Dietpitanie
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.listView2);
             this.tabPage3.Controls.Add(this.listView1);
-            this.tabPage3.Controls.Add(this.button2);
+            this.tabPage3.Controls.Add(this.buttonEject);
             this.tabPage3.Controls.Add(this.normCarbohydrates);
             this.tabPage3.Controls.Add(this.normFats);
             this.tabPage3.Controls.Add(this.eatFats);
@@ -409,7 +409,7 @@ namespace Dietpitanie
             this.tabPage3.Controls.Add(this.eatCalories);
             this.tabPage3.Controls.Add(this.normCalories);
             this.tabPage3.Controls.Add(this.toEatWeight);
-            this.tabPage3.Controls.Add(this.button1);
+            this.tabPage3.Controls.Add(this.buttonEat);
             this.tabPage3.Controls.Add(this.foodType);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -418,6 +418,33 @@ namespace Dietpitanie
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Калькулятор";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // checkToEatWeight
+            // 
+            this.checkToEatWeight.AutoSize = true;
+            this.checkToEatWeight.Location = new System.Drawing.Point(816, 81);
+            this.checkToEatWeight.Name = "checkToEatWeight";
+            this.checkToEatWeight.Size = new System.Drawing.Size(100, 13);
+            this.checkToEatWeight.TabIndex = 52;
+            this.checkToEatWeight.Text = "checkToEatWeight";
+            // 
+            // eatLabel
+            // 
+            this.eatLabel.AutoSize = true;
+            this.eatLabel.Location = new System.Drawing.Point(494, 225);
+            this.eatLabel.Name = "eatLabel";
+            this.eatLabel.Size = new System.Drawing.Size(51, 13);
+            this.eatLabel.TabIndex = 51;
+            this.eatLabel.Text = "Съедено";
+            // 
+            // toEatLabel
+            // 
+            this.toEatLabel.AutoSize = true;
+            this.toEatLabel.Location = new System.Drawing.Point(664, 57);
+            this.toEatLabel.Name = "toEatLabel";
+            this.toEatLabel.Size = new System.Drawing.Size(55, 13);
+            this.toEatLabel.TabIndex = 50;
+            this.toEatLabel.Text = "Съесть г.";
             // 
             // label14
             // 
@@ -681,18 +708,18 @@ namespace Dietpitanie
             this.columnHeader5.Text = "Ккал";
             this.columnHeader5.Width = 55;
             // 
-            // button2
+            // buttonEject
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonEject.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(664, 109);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(146, 23);
-            this.button2.TabIndex = 28;
-            this.button2.Text = "Извлечь";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonEject.Location = new System.Drawing.Point(664, 109);
+            this.buttonEject.Name = "buttonEject";
+            this.buttonEject.Size = new System.Drawing.Size(146, 23);
+            this.buttonEject.TabIndex = 28;
+            this.buttonEject.Text = "Извлечь";
+            this.buttonEject.UseVisualStyleBackColor = true;
+            this.buttonEject.Click += new System.EventHandler(this.buttonEject_Click);
             // 
             // normCarbohydrates
             // 
@@ -774,16 +801,16 @@ namespace Dietpitanie
             this.toEatWeight.TabIndex = 9;
             this.toEatWeight.TextChanged += new System.EventHandler(this.toEatWeight_TextChanged);
             // 
-            // button1
+            // buttonEat
             // 
-            this.button1.AutoSize = true;
-            this.button1.Location = new System.Drawing.Point(664, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(146, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Съесть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonEat.AutoSize = true;
+            this.buttonEat.Location = new System.Drawing.Point(664, 27);
+            this.buttonEat.Name = "buttonEat";
+            this.buttonEat.Size = new System.Drawing.Size(146, 23);
+            this.buttonEat.TabIndex = 8;
+            this.buttonEat.Text = "Съесть";
+            this.buttonEat.UseVisualStyleBackColor = true;
+            this.buttonEat.Click += new System.EventHandler(this.buttonEat_Click);
             // 
             // foodType
             // 
@@ -803,34 +830,7 @@ namespace Dietpitanie
             this.foodType.Size = new System.Drawing.Size(281, 21);
             this.foodType.TabIndex = 4;
             this.foodType.Text = "все виды";
-            this.foodType.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // toEatLabel
-            // 
-            this.toEatLabel.AutoSize = true;
-            this.toEatLabel.Location = new System.Drawing.Point(664, 57);
-            this.toEatLabel.Name = "toEatLabel";
-            this.toEatLabel.Size = new System.Drawing.Size(55, 13);
-            this.toEatLabel.TabIndex = 50;
-            this.toEatLabel.Text = "Съесть г.";
-            // 
-            // eatLabel
-            // 
-            this.eatLabel.AutoSize = true;
-            this.eatLabel.Location = new System.Drawing.Point(494, 225);
-            this.eatLabel.Name = "eatLabel";
-            this.eatLabel.Size = new System.Drawing.Size(51, 13);
-            this.eatLabel.TabIndex = 51;
-            this.eatLabel.Text = "Съедено";
-            // 
-            // checkToEatWeight
-            // 
-            this.checkToEatWeight.AutoSize = true;
-            this.checkToEatWeight.Location = new System.Drawing.Point(816, 81);
-            this.checkToEatWeight.Name = "checkToEatWeight";
-            this.checkToEatWeight.Size = new System.Drawing.Size(100, 13);
-            this.checkToEatWeight.TabIndex = 52;
-            this.checkToEatWeight.Text = "checkToEatWeight";
+            this.foodType.SelectedIndexChanged += new System.EventHandler(this.foodType_SelectedIndexChanged);
             // 
             // MainWindow
             // 
@@ -883,7 +883,7 @@ namespace Dietpitanie
         private TextBox eatCalories;
         private TextBox normCalories;
         private TextBox toEatWeight;
-        private Button button1;
+        private Button buttonEat;
         private ComboBox foodType;
         private TextBox activity2Time;
         private ComboBox activity2;
@@ -901,7 +901,7 @@ namespace Dietpitanie
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
-        private Button button2;
+        private Button buttonEject;
         private Label heightLabel;
         private Label ageLabel;
         private Label weightLabel;
