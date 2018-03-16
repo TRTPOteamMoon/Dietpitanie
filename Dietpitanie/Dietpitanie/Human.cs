@@ -1,8 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Dietpitanie
+﻿namespace Dietpitanie
 {
-    internal class Human
+    public class Human
     {
         public double Height { get; set; }
         public double Weight { get; set; }

@@ -63,6 +63,7 @@ namespace Dietpitanie
                     }
                     _human.CalcuteIndex();
                     _human.CalculateBmr(activity1.Text, activity2.Text, activity2Time.Text);
+                    _human.CalculateMacroelemnts();
                     resultLabel.Text = _human.CompareIndex();
                     normProteins.Text = _human.Proteins.ToString();
                     normFats.Text = _human.Fats.ToString();
