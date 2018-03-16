@@ -50,8 +50,12 @@ namespace Dietpitanie
         {
             try
             {
+                Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
                 if (height.Text.Length > 0 && weight.Text.Length > 0 && age.Text.Length > 0 &&
-                    (gender_female.Checked || gender_male.Checked))
+                    (gender_female.Checked || gender_male.Checked) &&
+                    (pattern.IsMatch(height.Text)) &&
+                    (pattern.IsMatch(weight.Text)) &&
+                    (pattern.IsMatch(age.Text)))
                 {
                     if (gender_male.Checked)
                     {
@@ -138,7 +142,7 @@ namespace Dietpitanie
             DB.Close();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void foodType_SelectedIndexChanged(object sender, EventArgs e)
         {
             listView1.Items.Clear();
             SQLiteCommand CMD = DB.CreateCommand();
@@ -163,11 +167,12 @@ namespace Dietpitanie
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonEat_Click(object sender, EventArgs e)
         {
             try
             {
-                if (listView1.SelectedItems.Count == 1 && toEatWeight.Text.Length != 0)
+                Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+                if (listView1.SelectedItems.Count == 1 && toEatWeight.Text.Length != 0 && (pattern.IsMatch(toEatWeight.Text)))
                 {
                     ListViewItem item = new ListViewItem(listView1.Items[listView1.SelectedIndices[0]].SubItems[0].Text);
                     item.SubItems.Add(toEatWeight.Text);
@@ -194,7 +199,7 @@ namespace Dietpitanie
             } 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonEject_Click(object sender, EventArgs e)
         {
             try
             {
