@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Dietpitanie
@@ -103,11 +103,27 @@ namespace Dietpitanie
             this.toEatWeight = new System.Windows.Forms.TextBox();
             this.buttonEat = new System.Windows.Forms.Button();
             this.foodType = new System.Windows.Forms.ComboBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.toNormCaloriesLabel = new System.Windows.Forms.Label();
+            this.toNormCarbohydratesLabel = new System.Windows.Forms.Label();
+            this.toNormFatsLabel = new System.Windows.Forms.Label();
+            this.toNormProteinsLabel = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.chekEatLabel = new System.Windows.Forms.Label();
+            this.buttonEatOffers = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.listView3 = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.genderbox.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // resultLabel
@@ -125,6 +141,7 @@ namespace Dietpitanie
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -832,6 +849,155 @@ namespace Dietpitanie
             this.foodType.Text = "все виды";
             this.foodType.SelectedIndexChanged += new System.EventHandler(this.foodType_SelectedIndexChanged);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label28);
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.label26);
+            this.tabPage4.Controls.Add(this.label25);
+            this.tabPage4.Controls.Add(this.toNormCaloriesLabel);
+            this.tabPage4.Controls.Add(this.toNormCarbohydratesLabel);
+            this.tabPage4.Controls.Add(this.toNormFatsLabel);
+            this.tabPage4.Controls.Add(this.toNormProteinsLabel);
+            this.tabPage4.Controls.Add(this.label20);
+            this.tabPage4.Controls.Add(this.buttonRefresh);
+            this.tabPage4.Controls.Add(this.chekEatLabel);
+            this.tabPage4.Controls.Add(this.buttonEatOffers);
+            this.tabPage4.Controls.Add(this.label19);
+            this.tabPage4.Controls.Add(this.listView3);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(974, 517);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Предложения";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(578, 274);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(32, 13);
+            this.label28.TabIndex = 13;
+            this.label28.Text = "Ккал";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(578, 248);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(70, 13);
+            this.label27.TabIndex = 12;
+            this.label27.Text = "г. углеводов";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(578, 225);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(50, 13);
+            this.label26.TabIndex = 11;
+            this.label26.Text = "г. жиров";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(578, 199);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(54, 13);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "г. белков";
+            // 
+            // toNormCaloriesLabel
+            // 
+            this.toNormCaloriesLabel.AutoSize = true;
+            this.toNormCaloriesLabel.Location = new System.Drawing.Point(515, 274);
+            this.toNormCaloriesLabel.Name = "toNormCaloriesLabel";
+            this.toNormCaloriesLabel.Size = new System.Drawing.Size(13, 13);
+            this.toNormCaloriesLabel.TabIndex = 9;
+            this.toNormCaloriesLabel.Text = "0";
+            // 
+            // toNormCarbohydratesLabel
+            // 
+            this.toNormCarbohydratesLabel.AutoSize = true;
+            this.toNormCarbohydratesLabel.Location = new System.Drawing.Point(515, 248);
+            this.toNormCarbohydratesLabel.Name = "toNormCarbohydratesLabel";
+            this.toNormCarbohydratesLabel.Size = new System.Drawing.Size(13, 13);
+            this.toNormCarbohydratesLabel.TabIndex = 8;
+            this.toNormCarbohydratesLabel.Text = "0";
+            // 
+            // toNormFatsLabel
+            // 
+            this.toNormFatsLabel.AutoSize = true;
+            this.toNormFatsLabel.Location = new System.Drawing.Point(515, 225);
+            this.toNormFatsLabel.Name = "toNormFatsLabel";
+            this.toNormFatsLabel.Size = new System.Drawing.Size(13, 13);
+            this.toNormFatsLabel.TabIndex = 7;
+            this.toNormFatsLabel.Text = "0";
+            // 
+            // toNormProteinsLabel
+            // 
+            this.toNormProteinsLabel.AutoSize = true;
+            this.toNormProteinsLabel.Location = new System.Drawing.Point(515, 199);
+            this.toNormProteinsLabel.Name = "toNormProteinsLabel";
+            this.toNormProteinsLabel.Size = new System.Drawing.Size(13, 13);
+            this.toNormProteinsLabel.TabIndex = 6;
+            this.toNormProteinsLabel.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(457, 163);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(223, 13);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "Осталось питательных веществ до нормы";
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Location = new System.Drawing.Point(443, 106);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(113, 23);
+            this.buttonRefresh.TabIndex = 4;
+            this.buttonRefresh.Text = "Обновить";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            // 
+            // chekEatLabel
+            // 
+            this.chekEatLabel.AutoSize = true;
+            this.chekEatLabel.Location = new System.Drawing.Point(578, 58);
+            this.chekEatLabel.Name = "chekEatLabel";
+            this.chekEatLabel.Size = new System.Drawing.Size(102, 13);
+            this.chekEatLabel.TabIndex = 3;
+            this.chekEatLabel.Text = "Блюдо не выбрано";
+            // 
+            // buttonEatOffers
+            // 
+            this.buttonEatOffers.Location = new System.Drawing.Point(443, 58);
+            this.buttonEatOffers.Name = "buttonEatOffers";
+            this.buttonEatOffers.Size = new System.Drawing.Size(113, 23);
+            this.buttonEatOffers.TabIndex = 2;
+            this.buttonEatOffers.Text = "Съесть";
+            this.buttonEatOffers.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(16, 32);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(120, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Предложенные блюда";
+            // 
+            // listView3
+            // 
+            this.listView3.Location = new System.Drawing.Point(19, 48);
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(385, 420);
+            this.listView3.TabIndex = 0;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -852,6 +1018,8 @@ namespace Dietpitanie
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -930,6 +1098,21 @@ namespace Dietpitanie
         private Label eatLabel;
         private Label toEatLabel;
         private Label checkToEatWeight;
+        private TabPage tabPage4;
+        private Button buttonRefresh;
+        private Label chekEatLabel;
+        private Button buttonEatOffers;
+        private Label label19;
+        private ListView listView3;
+        private Label label20;
+        private Label label28;
+        private Label label27;
+        private Label label26;
+        private Label label25;
+        private Label toNormCaloriesLabel;
+        private Label toNormCarbohydratesLabel;
+        private Label toNormFatsLabel;
+        private Label toNormProteinsLabel;
     }
 }
 
