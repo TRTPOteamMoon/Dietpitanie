@@ -118,6 +118,11 @@ namespace Dietpitanie
             this.buttonEatOffers = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.listView3 = new System.Windows.Forms.ListView();
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.genderbox.SuspendLayout();
@@ -962,6 +967,7 @@ namespace Dietpitanie
             this.buttonRefresh.TabIndex = 4;
             this.buttonRefresh.Text = "Обновить";
             this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // chekEatLabel
             // 
@@ -992,11 +998,47 @@ namespace Dietpitanie
             // 
             // listView3
             // 
+            this.listView3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16});
+            this.listView3.GridLines = true;
             this.listView3.Location = new System.Drawing.Point(19, 48);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(385, 420);
+            this.listView3.Size = new System.Drawing.Size(380, 420);
             this.listView3.TabIndex = 0;
             this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Название";
+            this.columnHeader12.Width = 120;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Белки";
+            this.columnHeader13.Width = 65;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Жиры";
+            this.columnHeader14.Width = 65;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Углеводы";
+            this.columnHeader15.Width = 65;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "Ккал";
+            this.columnHeader16.Width = 65;
             // 
             // MainWindow
             // 
@@ -1104,6 +1146,11 @@ namespace Dietpitanie
         private Button buttonEatOffers;
         private Label label19;
         private ListView listView3;
+        private ColumnHeader columnHeader12;
+        private ColumnHeader columnHeader13;
+        private ColumnHeader columnHeader14;
+        private ColumnHeader columnHeader15;
+        private ColumnHeader columnHeader16;
         private Label label20;
         private Label label28;
         private Label label27;
