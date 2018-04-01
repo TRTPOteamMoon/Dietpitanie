@@ -38,6 +38,19 @@ namespace Dietpitanie
             EatProteins = 0;
         }
 
+        public Human()
+        {
+            Height = 0;
+            Weight = 0;
+            Age = 0;
+            Sex = 0;
+            EatFood = new List<Food>();
+            EatCalories = 0;
+            EatCarbohydrates = 0;
+            EatFats = 0;
+            EatProteins = 0;
+        }
+
         public void CalcuteIndex()
         {
             Index = Weight / (Height/100 * Height/100);
@@ -138,6 +151,10 @@ namespace Dietpitanie
             EatProteins = 0;
             if (EatFood.Count == 0)
             {
+                LeftCalories = 0;
+                LeftProteins = 0;
+                LeftFats = 0;
+                LeftCarbohydrates = 0;
                 return;
             }
 

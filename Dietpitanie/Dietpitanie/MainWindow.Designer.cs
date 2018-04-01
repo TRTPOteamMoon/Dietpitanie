@@ -56,6 +56,8 @@ namespace Dietpitanie
             this.activity2 = new System.Windows.Forms.ComboBox();
             this.activity1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.toRejectFoodLabel = new System.Windows.Forms.Label();
+            this.toEatFoodLabel = new System.Windows.Forms.Label();
             this.checkToEatWeight = new System.Windows.Forms.Label();
             this.eatLabel = new System.Windows.Forms.Label();
             this.toEatLabel = new System.Windows.Forms.Label();
@@ -78,14 +80,14 @@ namespace Dietpitanie
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.toRejectListView = new System.Windows.Forms.ListView();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.toEatListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -397,6 +399,8 @@ namespace Dietpitanie
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.toRejectFoodLabel);
+            this.tabPage3.Controls.Add(this.toEatFoodLabel);
             this.tabPage3.Controls.Add(this.checkToEatWeight);
             this.tabPage3.Controls.Add(this.eatLabel);
             this.tabPage3.Controls.Add(this.toEatLabel);
@@ -419,8 +423,8 @@ namespace Dietpitanie
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Controls.Add(this.listView2);
-            this.tabPage3.Controls.Add(this.listView1);
+            this.tabPage3.Controls.Add(this.toRejectListView);
+            this.tabPage3.Controls.Add(this.toEatListView);
             this.tabPage3.Controls.Add(this.buttonEject);
             this.tabPage3.Controls.Add(this.normCarbohydrates);
             this.tabPage3.Controls.Add(this.normFats);
@@ -441,10 +445,28 @@ namespace Dietpitanie
             this.tabPage3.Text = "Калькулятор";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // toRejectFoodLabel
+            // 
+            this.toRejectFoodLabel.AutoSize = true;
+            this.toRejectFoodLabel.Location = new System.Drawing.Point(661, 131);
+            this.toRejectFoodLabel.Name = "toRejectFoodLabel";
+            this.toRejectFoodLabel.Size = new System.Drawing.Size(55, 13);
+            this.toRejectFoodLabel.TabIndex = 54;
+            this.toRejectFoodLabel.Text = "Съесть г.";
+            // 
+            // toEatFoodLabel
+            // 
+            this.toEatFoodLabel.AutoSize = true;
+            this.toEatFoodLabel.Location = new System.Drawing.Point(661, 53);
+            this.toEatFoodLabel.Name = "toEatFoodLabel";
+            this.toEatFoodLabel.Size = new System.Drawing.Size(55, 13);
+            this.toEatFoodLabel.TabIndex = 53;
+            this.toEatFoodLabel.Text = "Съесть г.";
+            // 
             // checkToEatWeight
             // 
             this.checkToEatWeight.AutoSize = true;
-            this.checkToEatWeight.Location = new System.Drawing.Point(816, 81);
+            this.checkToEatWeight.Location = new System.Drawing.Point(816, 105);
             this.checkToEatWeight.Name = "checkToEatWeight";
             this.checkToEatWeight.Size = new System.Drawing.Size(100, 13);
             this.checkToEatWeight.TabIndex = 52;
@@ -462,7 +484,7 @@ namespace Dietpitanie
             // toEatLabel
             // 
             this.toEatLabel.AutoSize = true;
-            this.toEatLabel.Location = new System.Drawing.Point(664, 57);
+            this.toEatLabel.Location = new System.Drawing.Point(661, 81);
             this.toEatLabel.Name = "toEatLabel";
             this.toEatLabel.Size = new System.Drawing.Size(55, 13);
             this.toEatLabel.TabIndex = 50;
@@ -639,25 +661,26 @@ namespace Dietpitanie
             this.label2.TabIndex = 31;
             this.label2.Text = "г. белков";
             // 
-            // listView2
+            // toRejectListView
             // 
-            this.listView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.toRejectListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.toRejectListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader8,
             this.columnHeader9,
             this.columnHeader10,
             this.columnHeader11});
-            this.listView2.GridLines = true;
-            this.listView2.Location = new System.Drawing.Point(497, 241);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(469, 244);
-            this.listView2.TabIndex = 30;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.toRejectListView.GridLines = true;
+            this.toRejectListView.Location = new System.Drawing.Point(497, 241);
+            this.toRejectListView.Name = "toRejectListView";
+            this.toRejectListView.Size = new System.Drawing.Size(469, 244);
+            this.toRejectListView.TabIndex = 30;
+            this.toRejectListView.UseCompatibleStateImageBehavior = false;
+            this.toRejectListView.View = System.Windows.Forms.View.Details;
+            this.toRejectListView.SelectedIndexChanged += new System.EventHandler(this.ToRejectListViewSelectedIndexChanged);
             // 
             // columnHeader6
             // 
@@ -686,24 +709,25 @@ namespace Dietpitanie
             // 
             this.columnHeader11.Text = "Углеводы";
             // 
-            // listView1
+            // toEatListView
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.toEatListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.toEatListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(8, 241);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(460, 244);
-            this.listView1.TabIndex = 29;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.toEatListView.GridLines = true;
+            this.toEatListView.Location = new System.Drawing.Point(8, 241);
+            this.toEatListView.Name = "toEatListView";
+            this.toEatListView.Size = new System.Drawing.Size(460, 244);
+            this.toEatListView.TabIndex = 29;
+            this.toEatListView.UseCompatibleStateImageBehavior = false;
+            this.toEatListView.View = System.Windows.Forms.View.Details;
+            this.toEatListView.SelectedIndexChanged += new System.EventHandler(this.ToEatListViewSelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -735,7 +759,7 @@ namespace Dietpitanie
             this.buttonEject.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEject.Location = new System.Drawing.Point(664, 109);
+            this.buttonEject.Location = new System.Drawing.Point(664, 158);
             this.buttonEject.Name = "buttonEject";
             this.buttonEject.Size = new System.Drawing.Size(146, 23);
             this.buttonEject.TabIndex = 28;
@@ -817,7 +841,7 @@ namespace Dietpitanie
             // 
             // toEatWeight
             // 
-            this.toEatWeight.Location = new System.Drawing.Point(664, 76);
+            this.toEatWeight.Location = new System.Drawing.Point(664, 101);
             this.toEatWeight.Name = "toEatWeight";
             this.toEatWeight.Size = new System.Drawing.Size(146, 20);
             this.toEatWeight.TabIndex = 9;
@@ -826,7 +850,7 @@ namespace Dietpitanie
             // buttonEat
             // 
             this.buttonEat.AutoSize = true;
-            this.buttonEat.Location = new System.Drawing.Point(664, 27);
+            this.buttonEat.Location = new System.Drawing.Point(664, 22);
             this.buttonEat.Name = "buttonEat";
             this.buttonEat.Size = new System.Drawing.Size(146, 23);
             this.buttonEat.TabIndex = 8;
@@ -1098,14 +1122,14 @@ namespace Dietpitanie
         private TextBox activity2Time;
         private ComboBox activity2;
         private ComboBox activity1;
-        private ListView listView2;
+        private ListView toRejectListView;
         private ColumnHeader columnHeader6;
         private ColumnHeader columnHeader7;
         private ColumnHeader columnHeader8;
         private ColumnHeader columnHeader9;
         private ColumnHeader columnHeader10;
         private ColumnHeader columnHeader11;
-        private ListView listView1;
+        private ListView toEatListView;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
@@ -1160,6 +1184,8 @@ namespace Dietpitanie
         private Label toNormCarbohydratesLabel;
         private Label toNormFatsLabel;
         private Label toNormProteinsLabel;
+        private Label toRejectFoodLabel;
+        private Label toEatFoodLabel;
     }
 }
 
