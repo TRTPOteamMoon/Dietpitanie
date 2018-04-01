@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -10,13 +10,19 @@ namespace Dietpitanie
 {
     public partial class MainWindow : Form
     {
-
+        private FoodList foodList;
+        private Food food;
         private Human _human;
-        private double proteins, fats, carbohydrates, calories,BMR;
+        private double proteins, fats, carbohydrates, calories, BMR;
         private SQLiteConnection DB;
+        private DBController dbController;
         public MainWindow()
         {
             InitializeComponent();
+            dbController = new DBController();
+            dbController.ConnectDb();
+            foodList = new FoodList(dbController.GetFoodTypeLength());
+            foodList = dbController.GetFoodList();
         }
 
         public void MainWindowLoad(object sender, EventArgs e)
@@ -27,6 +33,7 @@ namespace Dietpitanie
             resultLabel.Text = "";
             caloriesLabel.Text = "";
             checkToEatWeight.Text = "";
+            chekEatLabel.Text = "";
             buttonCalculate.Enabled = true;
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             location = location.Remove(location.Length - 25);
@@ -44,6 +51,19 @@ namespace Dietpitanie
                 item.SubItems.Add(reader["Carbohydrates"].ToString());
                 item.SubItems.Add(reader["Calories"].ToString());
                 listView1.Items.Add(item);
+            }
+            reader.Close();
+
+            DB.CreateCommand();
+            CMD.CommandText = "select * from Food";
+            reader = CMD.ExecuteReader();
+            foodList = new FoodList(9);
+            while (reader.Read())
+            {
+                
+                Food food = new Food(reader["Name"].ToString(), Convert.ToDouble(reader["Proteins"]), Convert.ToDouble(reader["Fats"]), Convert.ToDouble(reader["Carbohydrates"]));
+                foodList.AddFood(food,0);
+               
             }
         }
         private void buttonCalculate_Click(object sender, EventArgs e)
@@ -134,6 +154,39 @@ namespace Dietpitanie
             else
             {
                 checkToEatWeight.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            if (_human != null)
+            {
+                listView3.Items.Clear();
+                SQLiteCommand CMD = DB.CreateCommand();
+                string type = foodType.Text;
+                if (type == "все виды")
+                {
+                    CMD.CommandText = "select * from Food";
+                }
+                else
+                {
+                    CMD.CommandText = "select * from Food where type ='" + type.ToUpper() + "'";
+                }
+                SQLiteDataReader reader = CMD.ExecuteReader();
+                while (reader.Read())
+                {
+                    ListViewItem item = new ListViewItem(reader["Name"].ToString());
+                    item.SubItems.Add(reader["Proteins"].ToString());
+                    item.SubItems.Add(reader["Fats"].ToString());
+                    item.SubItems.Add(reader["Carbohydrates"].ToString());
+                    item.SubItems.Add(reader["Calories"].ToString());
+                    if (Convert.ToDouble(item.SubItems[1].Text) <= _human.Proteins - proteins && Convert.ToDouble(item.SubItems[2].Text) <= _human.Fats - fats &&
+                        Convert.ToDouble(item.SubItems[3].Text) <= _human.Carbohydrates - carbohydrates)
+                    {
+                        listView3.Items.Add(item);
+                    }
+                }
+
             }
         }
 

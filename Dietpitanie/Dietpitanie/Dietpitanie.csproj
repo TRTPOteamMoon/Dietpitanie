@@ -51,6 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBController.cs" />
+    <Compile Include="Dish.cs" />
+    <Compile Include="DishList.cs" />
+    <Compile Include="Food.cs" />
+    <Compile Include="FoodList.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
