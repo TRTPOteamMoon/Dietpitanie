@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dietpitanie
 {
-    class Dish
+    public class Dish
     {
         public string Name { get; set; }
         public double Proteins { get; set;}

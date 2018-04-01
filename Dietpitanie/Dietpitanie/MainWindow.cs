@@ -79,7 +79,7 @@ namespace Dietpitanie
                     caloriesLabel.Text = _human.Bmr.ToString();
 
                 }
-                else resultLabel.Text = @"Input data again";
+                else resultLabel.Text = @"Введите данные ещё раз";
             }
             catch (Exception exception)
             {
@@ -204,22 +204,30 @@ namespace Dietpitanie
                 Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
                 if (listView1.SelectedItems.Count == 1 && toEatWeight.Text.Length != 0 && (pattern.IsMatch(toEatWeight.Text)))
                 {
-                    ListViewItem item = new ListViewItem(listView1.Items[listView1.SelectedIndices[0]].SubItems[0].Text);
-                    item.SubItems.Add(toEatWeight.Text);
-                    item.SubItems.Add(Convert.ToString(Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[4].Text) * Convert.ToDouble(toEatWeight.Text) / 100));
-                    item.SubItems.Add(Convert.ToString(Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[1].Text) * Convert.ToDouble(toEatWeight.Text) / 100));
-                    item.SubItems.Add(Convert.ToString(Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[2].Text) * Convert.ToDouble(toEatWeight.Text) / 100));
-                    item.SubItems.Add(Convert.ToString(Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[3].Text) * Convert.ToDouble(toEatWeight.Text) / 100));
-                    listView2.Items.Add(item);
-                    proteins += ((Convert.ToDouble(toEatWeight.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[1].Text));
-                    fats += ((Convert.ToDouble(toEatWeight.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[2].Text));
-                    carbohydrates += ((Convert.ToDouble(toEatWeight.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[3].Text));
-                    calories += ((Convert.ToDouble(toEatWeight.Text) / 100) * Convert.ToDouble(listView1.Items[listView1.SelectedIndices[0]].SubItems[4].Text));
-                    eatProteins.Text = proteins.ToString();
-                    eatFats.Text = fats.ToString();
-                    eatCarbohydrates.Text = carbohydrates.ToString();
-                    eatCalories.Text = calories.ToString();
+                    var position = listView1.SelectedIndices[0];
+                    string type = foodType.Text;
+                    int index = foodList.IndexListFood(type);
+                    food = foodList.GetFood(index,position);
+                    food.Weight = Convert.ToDouble(toEatWeight.Text);
+                    _human.EatSomeFood(food);
+                    eatProteins.Text = _human.EatProteins.ToString();
+                    eatFats.Text = _human.EatFats.ToString();
+                    eatCarbohydrates.Text = _human.EatCarbohydrates.ToString();
+                    eatCalories.Text = _human.EatCalories.ToString();
                     toEatWeight.Clear();
+
+                    ListViewItem item = new ListViewItem(food.Name);
+                    item.SubItems.Add(food.Weight.ToString());
+                    item.SubItems.Add((food.Calories * food.Weight * 0.01).ToString());
+                    item.SubItems.Add((food.Proteins * food.Weight * 0.01).ToString());
+                    item.SubItems.Add((food.Fats * food.Weight * 0.01).ToString());
+                    item.SubItems.Add((food.Carbohydrates * food.Weight * 0.01).ToString());
+                    listView2.Items.Add(item);
+
+                    toNormCalories.Text = _human.LeftCalories.ToString();
+                    toNormProteins.Text = _human.LeftProteins.ToString();
+                    toNormFats.Text = _human.LeftFats.ToString();
+                    toNormCarbohydrates.Text = _human.LeftCarbohydrates.ToString();
                 }
             }
             catch (Exception exception)
@@ -235,15 +243,22 @@ namespace Dietpitanie
             {
                 if (listView2.SelectedItems.Count == 1)
                 {
-                    proteins = proteins - Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[3].Text);
-                    fats -= (Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[4].Text));
-                    carbohydrates -= (Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[5].Text));
-                    calories -= (Convert.ToDouble(listView2.Items[listView2.SelectedIndices[0]].SubItems[2].Text));
-                    listView2.Items.Remove(listView2.Items[listView2.SelectedIndices[0]]);
-                    eatProteins.Text = proteins.ToString();
-                    eatFats.Text = fats.ToString();
-                    eatCarbohydrates.Text = carbohydrates.ToString();
-                    eatCalories.Text = calories.ToString();
+                    var position = listView2.SelectedIndices[0];
+                    string type = foodType.Text;
+                    listView2.Items.Remove(listView2.Items[position]);
+                    _human.RejectEatSomeFood(position);
+
+                    eatProteins.Text = _human.EatProteins.ToString();
+                    eatFats.Text = _human.EatFats.ToString();
+                    eatCarbohydrates.Text = _human.EatCarbohydrates.ToString();
+                    eatCalories.Text = _human.EatCalories.ToString();
+                    toEatWeight.Clear();
+
+                    toNormCalories.Text = _human.LeftCalories.ToString();
+                    toNormProteins.Text = _human.LeftProteins.ToString();
+                    toNormFats.Text = _human.LeftFats.ToString();
+                    toNormCarbohydrates.Text = _human.LeftCarbohydrates.ToString();
+
                 }
             }
             catch (Exception exception)

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Dietpitanie
 {
-    class FoodList
+    public class FoodList
     {
         public string[] FoodType = new[]
         {

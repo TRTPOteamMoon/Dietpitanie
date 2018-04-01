@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Dietpitanie
 {
-    class DBController
+    public class DBController
     {
         public SQLiteConnection Db;
 

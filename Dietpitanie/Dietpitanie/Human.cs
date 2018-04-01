@@ -1,4 +1,6 @@
-﻿namespace Dietpitanie
+﻿using System.Collections.Generic;
+
+namespace Dietpitanie
 {
     public class Human
     {
@@ -10,7 +12,17 @@
         public double Bmr { get; set; }
         public double Proteins { get; set; }
         public double Fats { get; set; }
+        public double Calories { get; set; }
         public double Carbohydrates { get; set; }
+        public List<Food> EatFood { get; set; }
+        public double EatProteins { get; set; }
+        public double EatFats { get; set; }
+        public double EatCarbohydrates { get; set; }
+        public double EatCalories { get; set; }
+        public double LeftProteins { get; set; }
+        public double LeftFats { get; set; }
+        public double LeftCarbohydrates { get; set; }
+        public double LeftCalories { get; set; }
 
 
         public Human (double height, double weight, double age, int sex)
@@ -19,6 +31,11 @@
             Weight = weight;
             Age = age;
             Sex = sex;
+            EatFood = new List<Food>();
+            EatCalories = 0;
+            EatCarbohydrates = 0;
+            EatFats = 0;
+            EatProteins = 0;
         }
 
         public void CalcuteIndex()
@@ -43,7 +60,7 @@
             return "Ожирение 3 степени";
         }
 
-        public void CalculateBmr(string activity1Type,string activity2Type, string time)
+        public void CalculateBmr(string activity1Type,string activity2Type, string timer)
         {
             Bmr = 9.99 * Weight + 6.25 * Height - 4.95 * Age;
             if (Sex==1)
@@ -74,43 +91,36 @@
                     break;
             }
 
-            double Time;
-            if (time.Length == 0)
-            {
-                Time = 0;
-            }
-            else
-            {
-                Time = double.Parse(time);
-            } 
-            
-            
-            if (Time > 0)
+            var time = timer.Length == 0 ? 0 : double.Parse(timer); 
+
+            if (time > 0)
             {
                 switch (activity2Type)
                 {
                     case "ничего":
                         break;
                     case "велоспорт":
-                        Bmr += 660 * Time / 60;
+                        Bmr += 660 * time / 60;
                         break;
                     case "бег трусцой":
-                        Bmr += 600 * Time / 60;
+                        Bmr += 600 * time / 60;
                         break;
                     case "волейбол":
-                        Bmr += 350 * Time / 60;
+                        Bmr += 350 * time / 60;
                         break;
                     case "гимнастика":
-                        Bmr += 440 * Time / 60;
+                        Bmr += 440 * time / 60;
                         break;
                     case "катание на коньках":
-                        Bmr += 400 * Time / 60;
+                        Bmr += 400 * time / 60;
                         break;
                     case " плавние":
-                        Bmr += 350 * Time / 60;
+                        Bmr += 350 * time / 60;
                         break;
                 }
             }
+
+            Calories = Bmr;
         }
 
         public void CalculateMacroelemnts()
@@ -118,6 +128,43 @@
             Proteins = Weight * 1.2;
             Fats = Weight * 0.5;
             Carbohydrates = (Bmr - Proteins * 4 - Fats * 9) / 4;
+        }
+
+        public void Count()
+        {
+            EatCalories = 0;
+            EatCarbohydrates = 0;
+            EatFats = 0;
+            EatProteins = 0;
+            if (EatFood.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var t in EatFood)
+            {
+                EatCalories += t.Calories * t.Weight*0.01;
+                EatProteins += t.Proteins * t.Weight*0.01;
+                EatFats += t.Fats * t.Weight*0.01;
+                EatCarbohydrates += t.Carbohydrates * t.Weight*0.01;
+            }
+
+            LeftCalories = Calories - EatCalories;
+            LeftProteins = Proteins - EatProteins;
+            LeftFats = Fats - EatFats;
+            LeftCarbohydrates = Carbohydrates - EatCarbohydrates;
+        }
+
+        public void RejectEatSomeFood(int i)
+        {
+            EatFood.RemoveAt(i);
+            Count();
+        }
+
+        public void EatSomeFood(Food food)
+        {
+            EatFood.Add(food);
+            Count();
         }
     }
 }
