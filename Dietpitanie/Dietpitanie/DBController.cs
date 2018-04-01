@@ -61,7 +61,7 @@ namespace Dietpitanie
                 SQLiteDataReader reader = CMD.ExecuteReader();
                 while (reader.Read())
                 {
-                    Food food = new Food(reader["Name"].ToString(), Convert.ToDouble(reader["Proteins"]), Convert.ToDouble(reader["Fats"]), Convert.ToDouble(reader["Carbohydrates"]));
+                    Food food = new Food(reader["Name"].ToString(), Convert.ToDouble(reader["Proteins"]), Convert.ToDouble(reader["Fats"]), Convert.ToDouble(reader["Carbohydrates"]), Convert.ToDouble(reader["Calories"]));
                     foodList.AddFood(food, i);
                 }
                 reader.Close();

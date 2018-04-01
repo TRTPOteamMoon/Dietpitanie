@@ -13,22 +13,25 @@ namespace Dietpitanie
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
         public double Weight { get; set; }
+        public double Calories { get; set; }
 
-        public Food(string name, double proteins, double fats, double carbohydrates)
+        public Food(string name, double proteins, double fats, double carbohydrates, double calories)
         {
             Name = name;
             Proteins = proteins;
             Fats = fats;
             Carbohydrates = carbohydrates;
+            Calories = calories;
             Weight = 0;
         }
 
-        public Food(string name, double proteins, double fats, double carbohydrates, double weight)
+        public Food(string name, double proteins, double fats, double carbohydrates,double calories, double weight)
         {
             Name = name;
             Proteins = proteins;
             Fats = fats;
             Carbohydrates = carbohydrates;
+            Calories = calories;
             Weight = weight;
         }
     }
