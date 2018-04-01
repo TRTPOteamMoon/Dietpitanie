@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dietpitanie
 {
-    class DishList
+    public class DishList
     {
     }
 }
