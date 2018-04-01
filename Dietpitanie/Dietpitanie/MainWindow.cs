@@ -10,17 +10,21 @@ namespace Dietpitanie
 {
     public partial class MainWindow : Form
     {
-
+        private FoodList foodList;
+        private Food food;
         private Human _human;
         private double proteins, fats, carbohydrates, calories, BMR;
-        private SQLiteConnection DB;
+        private DBController dbController;
+
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
+
             weightLabel.Text = "";
             heightLabel.Text = "";
             ageLabel.Text = "";
@@ -29,23 +33,21 @@ namespace Dietpitanie
             checkToEatWeight.Text = "";
             chekEatLabel.Text = "";
             buttonCalculate.Enabled = true;
-            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            location = location.Remove(location.Length - 25);
-            DB = new SQLiteConnection(@"Data source ="+location+"Database.db; Version = 3");
-            DB.Open();
-            SQLiteCommand CMD = DB.CreateCommand();
-            CMD.CommandText = "select * from Food";
-            SQLiteDataReader reader = CMD.ExecuteReader();
-            
-            while (reader.Read())
+
+            dbController = new DBController();
+            dbController.ConnectDb();
+            foodList = new FoodList(dbController.GetFoodTypeLength());
+            foodList = dbController.GetFoodList();
+            for (int i = 0; i < foodList.LengthListFood(0); i++)
             {
-                ListViewItem item = new ListViewItem(reader["Name"].ToString());
-                item.SubItems.Add(reader["Proteins"].ToString());
-                item.SubItems.Add(reader["Fats"].ToString());
-                item.SubItems.Add(reader["Carbohydrates"].ToString());
-                item.SubItems.Add(reader["Calories"].ToString());
+                
+                ListViewItem item = new ListViewItem(foodList.GetFood(0, i).Name);
+                item.SubItems.Add(foodList.GetFood(0, i).Proteins.ToString());
+                item.SubItems.Add(foodList.GetFood(0, i).Fats.ToString());
+                item.SubItems.Add(foodList.GetFood(0, i).Carbohydrates.ToString());
+                item.SubItems.Add(foodList.GetFood(0, i).Calories.ToString());
                 listView1.Items.Add(item);
-            }
+            }        
         }
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
@@ -140,63 +142,57 @@ namespace Dietpitanie
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            if (_human != null)
-            {
-                listView3.Items.Clear();
-                SQLiteCommand CMD = DB.CreateCommand();
-                string type = foodType.Text;
-                if (type == "все виды")
-                {
-                    CMD.CommandText = "select * from Food";
-                }
-                else
-                {
-                    CMD.CommandText = "select * from Food where type ='" + type.ToUpper() + "'";
-                }
-                SQLiteDataReader reader = CMD.ExecuteReader();
-                while (reader.Read())
-                {
-                    ListViewItem item = new ListViewItem(reader["Name"].ToString());
-                    item.SubItems.Add(reader["Proteins"].ToString());
-                    item.SubItems.Add(reader["Fats"].ToString());
-                    item.SubItems.Add(reader["Carbohydrates"].ToString());
-                    item.SubItems.Add(reader["Calories"].ToString());
-                    if (Convert.ToDouble(item.SubItems[1].Text) <= _human.Proteins - proteins && Convert.ToDouble(item.SubItems[2].Text) <= _human.Fats - fats &&
-                        Convert.ToDouble(item.SubItems[3].Text) <= _human.Carbohydrates - carbohydrates)
-                    {
-                        listView3.Items.Add(item);
-                    }
-                }
 
-            }
+            // DB UPDATED
+            //if (_human != null)
+            //{
+            //    listView3.Items.Clear();
+            //    SQLiteCommand CMD = DB.CreateCommand();
+            //    string type = foodType.Text;
+            //    if (type == "все виды")
+            //    {
+            //        CMD.CommandText = "select * from Food";
+            //    }
+            //    else
+            //    {
+            //        CMD.CommandText = "select * from Food where type ='" + type.ToUpper() + "'";
+            //    }
+            //    SQLiteDataReader reader = CMD.ExecuteReader();
+            //    while (reader.Read())
+            //    {
+            //        ListViewItem item = new ListViewItem(reader["Name"].ToString());
+            //        item.SubItems.Add(reader["Proteins"].ToString());
+            //        item.SubItems.Add(reader["Fats"].ToString());
+            //        item.SubItems.Add(reader["Carbohydrates"].ToString());
+            //        item.SubItems.Add(reader["Calories"].ToString());
+            //        if (Convert.ToDouble(item.SubItems[1].Text) <= _human.Proteins - proteins && Convert.ToDouble(item.SubItems[2].Text) <= _human.Fats - fats &&
+            //            Convert.ToDouble(item.SubItems[3].Text) <= _human.Carbohydrates - carbohydrates)
+            //        {
+            //            listView3.Items.Add(item);
+            //        }
+            //    }
+            //
+            //}
+
         }
 
         private void MainWindowClosed(object sender, FormClosedEventArgs e)
         {
-            DB.Close();
+            dbController.DisconnectDb();
         }
 
         private void foodType_SelectedIndexChanged(object sender, EventArgs e)
         {
             listView1.Items.Clear();
-            SQLiteCommand CMD = DB.CreateCommand();
             string type = foodType.Text;
-            if (type == "все виды")
+            int index = foodList.IndexListFood(type);
+            for (int i = 0; i < foodList.LengthListFood(index); i++)
             {
-                CMD.CommandText = "select * from Food";
-            }
-            else
-            {
-                CMD.CommandText = "select * from Food where type ='"+type.ToUpper()+"'";
-            } 
-            SQLiteDataReader reader = CMD.ExecuteReader();       
-            while (reader.Read())
-            {
-                ListViewItem item = new ListViewItem(reader["Name"].ToString());
-                item.SubItems.Add(reader["Proteins"].ToString());
-                item.SubItems.Add(reader["Fats"].ToString());
-                item.SubItems.Add(reader["Carbohydrates"].ToString());
-                item.SubItems.Add(reader["Calories"].ToString());
+                ListViewItem item = new ListViewItem(foodList.GetFood(index, i).Name);
+                item.SubItems.Add(foodList.GetFood(index, i).Proteins.ToString());
+                item.SubItems.Add(foodList.GetFood(index, i).Fats.ToString());
+                item.SubItems.Add(foodList.GetFood(index, i).Carbohydrates.ToString());
+                item.SubItems.Add(foodList.GetFood(index, i).Calories.ToString());
                 listView1.Items.Add(item);
             }
         }
