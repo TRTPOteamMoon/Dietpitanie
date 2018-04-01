@@ -15,6 +15,7 @@ namespace Dietpitanie
         private Human _human;
         private double proteins, fats, carbohydrates, calories, BMR;
         private DBController dbController;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -141,6 +142,7 @@ namespace Dietpitanie
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
+
             // DB UPDATED
             //if (_human != null)
             //{
@@ -171,6 +173,7 @@ namespace Dietpitanie
             //    }
             //
             //}
+
         }
 
         private void MainWindowClosed(object sender, FormClosedEventArgs e)
