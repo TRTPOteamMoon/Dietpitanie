@@ -1,8 +1,4 @@
 using System;
-using System.Data;
-using System.Data.SQLite;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -11,10 +7,11 @@ namespace Dietpitanie
     public partial class MainWindow : Form
     {
         private FoodList _foodList;
+        private DishList _dishList;
         private Food _food;
+        private Dish _dish;
         private Human _human;
         private DBController _dbController;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +20,6 @@ namespace Dietpitanie
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
-
             weightLabel.Text = "";
             heightLabel.Text = "";
             ageLabel.Text = "";
@@ -37,6 +33,8 @@ namespace Dietpitanie
             _dbController.ConnectDb();
             _foodList = new FoodList(_dbController.GetFoodTypeLength());
             _foodList = _dbController.GetFoodList();
+            _dishList = new DishList(_dbController.GetDishTypeLength());
+            _dishList = _dbController.GeDishList();
             for (int i = 0; i < _foodList.LengthListFood(0); i++)
             {
                 
@@ -246,7 +244,9 @@ namespace Dietpitanie
             try
             {
                 Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
-                if (toEatListView.SelectedItems.Count == 1 && toEatWeight.Text.Length != 0 && (pattern.IsMatch(toEatWeight.Text)))
+                if (toEatListView.SelectedItems.Count == 1 &&
+                    toEatWeight.Text.Length != 0 &&
+                    (pattern.IsMatch(toEatWeight.Text)))
                 {
                     var position = toEatListView.SelectedIndices[0];
                     string type = foodType.Text;
