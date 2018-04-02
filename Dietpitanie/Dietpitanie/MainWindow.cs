@@ -1,8 +1,4 @@
 using System;
-using System.Data;
-using System.Data.SQLite;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -14,7 +10,6 @@ namespace Dietpitanie
         private Food _food;
         private Human _human;
         private DBController _dbController;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +18,6 @@ namespace Dietpitanie
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
-
             weightLabel.Text = "";
             heightLabel.Text = "";
             ageLabel.Text = "";
@@ -246,7 +240,9 @@ namespace Dietpitanie
             try
             {
                 Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
-                if (toEatListView.SelectedItems.Count == 1 && toEatWeight.Text.Length != 0 && (pattern.IsMatch(toEatWeight.Text)))
+                if (toEatListView.SelectedItems.Count == 1 &&
+                    toEatWeight.Text.Length != 0 &&
+                    (pattern.IsMatch(toEatWeight.Text)))
                 {
                     var position = toEatListView.SelectedIndices[0];
                     string type = foodType.Text;

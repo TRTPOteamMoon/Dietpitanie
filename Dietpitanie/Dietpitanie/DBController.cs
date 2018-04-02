@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
-using System.Windows.Forms;
 
 namespace Dietpitanie
 {
@@ -23,6 +18,15 @@ namespace Dietpitanie
             "масла, соусы",
             "напитки",
             "кондитерские изделия"
+        };
+
+        public string[] DishType = new[]
+        {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
         };
 
         public int GetFoodTypeLength()
@@ -66,8 +70,25 @@ namespace Dietpitanie
                 }
                 reader.Close();
             }
-
             return foodList;
+        }
+
+        public DishList GeDishList()
+        {
+            DishList dishList = new DishList(DishType.Length);
+            SQLiteCommand CMD = Db.CreateCommand();
+            for (int i = 0; i < DishType.Length; i++)
+            {
+                CMD.CommandText = "select * from Food where type ='" + FoodType[i] + "'";
+                SQLiteDataReader reader = CMD.ExecuteReader();
+                while (reader.Read())
+                {
+                    Dish dish = new Dish(reader["Name"].ToString(), Convert.ToDouble(reader["Proteins"]), Convert.ToDouble(reader["Fats"]), Convert.ToDouble(reader["Carbohydrates"]), Convert.ToDouble(reader["Calories"]));
+                    dishList.AddDish(dish,i);
+                }
+                reader.Close();
+            }
+            return dishList;
         }
 
     }
