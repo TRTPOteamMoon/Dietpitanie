@@ -34,6 +34,11 @@ namespace Dietpitanie
             return FoodType.Length;
         }
 
+        public int GetDishTypeLength()
+        {
+            return DishType.Length;
+        }
+
         public void ConnectDb()
         {
             string location = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -79,7 +84,7 @@ namespace Dietpitanie
             SQLiteCommand CMD = Db.CreateCommand();
             for (int i = 0; i < DishType.Length; i++)
             {
-                CMD.CommandText = "select * from Food where type ='" + FoodType[i] + "'";
+                CMD.CommandText = "select * from Dish where type ='" + DishType[i] + "'";
                 SQLiteDataReader reader = CMD.ExecuteReader();
                 while (reader.Read())
                 {

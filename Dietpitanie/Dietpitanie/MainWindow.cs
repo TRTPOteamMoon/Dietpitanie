@@ -7,7 +7,9 @@ namespace Dietpitanie
     public partial class MainWindow : Form
     {
         private FoodList _foodList;
+        private DishList _dishList;
         private Food _food;
+        private Dish _dish;
         private Human _human;
         private DBController _dbController;
         public MainWindow()
@@ -31,6 +33,8 @@ namespace Dietpitanie
             _dbController.ConnectDb();
             _foodList = new FoodList(_dbController.GetFoodTypeLength());
             _foodList = _dbController.GetFoodList();
+            _dishList = new DishList(_dbController.GetDishTypeLength());
+            _dishList = _dbController.GeDishList();
             for (int i = 0; i < _foodList.LengthListFood(0); i++)
             {
                 
