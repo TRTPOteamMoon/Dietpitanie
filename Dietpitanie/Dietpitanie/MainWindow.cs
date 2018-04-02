@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace Dietpitanie
         private Dish _dish;
         private Human _human;
         private DBController _dbController;
+        private MenuMaker _menuMaker;
         public MainWindow()
         {
             InitializeComponent();
@@ -20,13 +22,14 @@ namespace Dietpitanie
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
+            suggestNameLabel.Text = "";
+            suggestWeightLabel.Text = "";
             weightLabel.Text = "";
             heightLabel.Text = "";
             ageLabel.Text = "";
             resultLabel.Text = "";
             caloriesLabel.Text = "";
             checkToEatWeight.Text = "";
-            chekEatLabel.Text = "";
             buttonCalculate.Enabled = true;
             _human =new Human();
             _dbController = new DBController();
@@ -103,6 +106,11 @@ namespace Dietpitanie
                     toNormProteins.Text = _human.LeftProteins.ToString();
                     toNormFats.Text = _human.LeftFats.ToString();
                     toNormCarbohydrates.Text = _human.LeftCarbohydrates.ToString();
+                    _menuMaker = new MenuMaker(_dishList,_human);
+                    _menuMaker.CreateBreakfast();
+                    _menuMaker.CreateLunch();
+                    _menuMaker.CreateSupper();
+
 
                 }
                 else resultLabel.Text = @"Введите данные ещё раз";
@@ -168,38 +176,24 @@ namespace Dietpitanie
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
+            this.suggestList.Items.Clear();
+            List<Food> suggestList = new List<Food>();
+            for (int i = 0; i < _foodList.LengthListFood(0); i++)
+            {
 
-            // DB UPDATED
-            //if (_human != null)
-            //{
-            //    listView3.Items.Clear();
-            //    SQLiteCommand CMD = DB.CreateCommand();
-            //    string type = foodType.Text;
-            //    if (type == "все виды")
-            //    {
-            //        CMD.CommandText = "select * from Food";
-            //    }
-            //    else
-            //    {
-            //        CMD.CommandText = "select * from Food where type ='" + type.ToUpper() + "'";
-            //    }
-            //    SQLiteDataReader reader = CMD.ExecuteReader();
-            //    while (reader.Read())
-            //    {
-            //        ListViewItem item = new ListViewItem(reader["Name"].ToString());
-            //        item.SubItems.Add(reader["Proteins"].ToString());
-            //        item.SubItems.Add(reader["Fats"].ToString());
-            //        item.SubItems.Add(reader["Carbohydrates"].ToString());
-            //        item.SubItems.Add(reader["Calories"].ToString());
-            //        if (Convert.ToDouble(item.SubItems[1].Text) <= _human.Proteins - proteins && Convert.ToDouble(item.SubItems[2].Text) <= _human.Fats - fats &&
-            //            Convert.ToDouble(item.SubItems[3].Text) <= _human.Carbohydrates - carbohydrates)
-            //        {
-            //            listView3.Items.Add(item);
-            //        }
-            //    }
-            //
-            //}
-
+                ListViewItem item = new ListViewItem(_foodList.GetFood(0, i).Name);
+                item.SubItems.Add(_foodList.GetFood(0, i).Proteins.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
+                if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories&&
+                Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                {
+                    suggestList.Add(_foodList.GetFood(0, i));
+                    this.suggestList.Items.Add(item);
+                }
+            }
+            _human.SuggestFoodList = suggestList;
         }
 
         private void ToEatListViewSelectedIndexChanged(object sender, EventArgs e)
@@ -310,6 +304,30 @@ namespace Dietpitanie
             {
                 Console.WriteLine(exception);
                 throw;
+            }
+        }
+
+        private void suggestList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (suggestList.SelectedItems.Count == 1)
+            {
+                var position = suggestList.SelectedIndices[0];
+                List<Food> foodlist = new List<Food>(0);
+                   foodlist = _human.SuggestFoodList;
+                Food food = foodlist[position];
+                double weight1 = _human.LeftCalories / food.Calories * 100;
+                double weight2 = _human.LeftCarbohydrates / food.Carbohydrates * 100;
+                if (weight1 > weight2)
+                {
+                    suggestNameLabel.Text = food.Name;
+                    suggestWeightLabel.Text = @"100 - " + weight2.ToString() + @" г.";
+                }
+                else
+                {
+                    suggestNameLabel.Text = food.Name;
+                    suggestWeightLabel.Text = @"100 - " + weight1.ToString() + @" г.";
+                }
+
             }
         }
     }
