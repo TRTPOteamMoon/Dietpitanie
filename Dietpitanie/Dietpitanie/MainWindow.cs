@@ -312,5 +312,17 @@ namespace Dietpitanie
                 throw;
             }
         }
+
+        private void bAdd_Click(object sender, EventArgs e)
+        {
+            double fats = Convert.ToDouble(Fats.Text);
+            double proteins = Convert.ToDouble(Proteins.Text);
+            double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
+            double calories = Convert.ToDouble(Calories.Text);
+            string name = Name1.Text;
+            Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
+
+            _foodList.AddFood(tFood, 4);
+        }
     }
 }
