@@ -133,15 +133,7 @@ namespace Dietpitanie
             this.suggestNameLabel = new System.Windows.Forms.Label();
 
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.toNormCaloriesLabel = new System.Windows.Forms.Label();
-            this.toNormCarbohydratesLabel = new System.Windows.Forms.Label();
-            this.toNormFatsLabel = new System.Windows.Forms.Label();
-            this.toNormProteinsLabel = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+          
 
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
@@ -1308,7 +1300,7 @@ namespace Dietpitanie
 
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-=======
+
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
 
