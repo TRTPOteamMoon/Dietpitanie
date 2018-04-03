@@ -16,3 +16,12 @@
     * Управление конфигурацией - данные пользователя будут сохряняться для последующего использования  
 6. Структурная схема приложения
     ![](https://github.com/TRTPOteamMoon/Dietpitanie/blob/master/Lab4/Scheme.jpg)
+# Часть 2.
+## Анализ архитектуры
+1. 
+2. Текущая архитектура 
+![](https://github.com/TRTPOteamMoon/Dietpitanie/blob/master/Lab4/SchemeModified.jpg)
+3. Сгенерирования диаграмма классов
+![](https://github.com/TRTPOteamMoon/Dietpitanie/blob/master/Lab4/Dietpitanie.jpg)
+# Часть 3.
+## Сравнение и рефакторинг
