@@ -25,7 +25,7 @@ namespace Dietpitanie
         public double LeftCalories { get; set; }
         public List<Dish> MenuList { get; set; }
         public List<Food> SuggestFoodList { get; set; }
-
+        public int Correction { get; set; }
 
         public Human (double height, double weight, double age, int sex)
         {
@@ -40,6 +40,7 @@ namespace Dietpitanie
             EatCarbohydrates = 0;
             EatFats = 0;
             EatProteins = 0;
+            Correction = 1;
         }
 
         public Human()
@@ -55,6 +56,7 @@ namespace Dietpitanie
             EatCarbohydrates = 0;
             EatFats = 0;
             EatProteins = 0;
+            Correction = 1;
         }
 
         public void CalcuteIndex()

@@ -58,7 +58,7 @@ namespace Dietpitanie
                     dish1.Weight = weight1;
                     dish2.Weight = weight2;
                     MenuList.AddDish(dish1,0);
-                    MenuList.AddDish(dish1, 0);
+                    MenuList.AddDish(dish2, 0);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace Dietpitanie
                     dish1.Weight = weight1;
                     dish2.Weight = weight2;
                     MenuList.AddDish(dish1, 1);
-                    MenuList.AddDish(dish1, 1);
+                    MenuList.AddDish(dish2, 1);
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace Dietpitanie
                     dish1.Weight = weight1;
                     dish2.Weight = weight2;
                     MenuList.AddDish(dish1, 2);
-                    MenuList.AddDish(dish1, 2);
+                    MenuList.AddDish(dish2, 2);
                 }
             }
         }

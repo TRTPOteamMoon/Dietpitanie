@@ -49,6 +49,14 @@ namespace Dietpitanie
             this.weight = new System.Windows.Forms.TextBox();
             this.buttonCalculate = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.makeMenuButton = new System.Windows.Forms.Button();
+            this.menuList = new System.Windows.Forms.ListView();
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.activity1Label = new System.Windows.Forms.Label();
@@ -106,6 +114,8 @@ namespace Dietpitanie
             this.buttonEat = new System.Windows.Forms.Button();
             this.foodType = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.suggestWeightLabel = new System.Windows.Forms.Label();
+            this.suggestNameLabel = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.suggestList = new System.Windows.Forms.ListView();
@@ -114,14 +124,18 @@ namespace Dietpitanie
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.suggestNameLabel = new System.Windows.Forms.Label();
-            this.suggestWeightLabel = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.genderbox.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // resultLabel
@@ -229,7 +243,7 @@ namespace Dietpitanie
             // 
             this.genderbox.Controls.Add(this.gender_male);
             this.genderbox.Controls.Add(this.gender_female);
-            this.genderbox.Location = new System.Drawing.Point(315, 67);
+            this.genderbox.Location = new System.Drawing.Point(393, 63);
             this.genderbox.Name = "genderbox";
             this.genderbox.Size = new System.Drawing.Size(142, 93);
             this.genderbox.TabIndex = 11;
@@ -306,6 +320,10 @@ namespace Dietpitanie
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Controls.Add(this.makeMenuButton);
+            this.tabPage2.Controls.Add(this.menuList);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.activity1Label);
@@ -319,6 +337,64 @@ namespace Dietpitanie
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Активность";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // makeMenuButton
+            // 
+            this.makeMenuButton.Location = new System.Drawing.Point(27, 153);
+            this.makeMenuButton.Name = "makeMenuButton";
+            this.makeMenuButton.Size = new System.Drawing.Size(141, 23);
+            this.makeMenuButton.TabIndex = 32;
+            this.makeMenuButton.Text = "Подобрать меню";
+            this.makeMenuButton.UseVisualStyleBackColor = true;
+            this.makeMenuButton.Click += new System.EventHandler(this.makeMenuButton_Click);
+            // 
+            // menuList
+            // 
+            this.menuList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader17,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22});
+            this.menuList.GridLines = true;
+            this.menuList.Location = new System.Drawing.Point(27, 193);
+            this.menuList.Name = "menuList";
+            this.menuList.Size = new System.Drawing.Size(704, 259);
+            this.menuList.TabIndex = 31;
+            this.menuList.UseCompatibleStateImageBehavior = false;
+            this.menuList.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "Название";
+            this.columnHeader17.Width = 290;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "Масса";
+            this.columnHeader18.Width = 99;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "Ккал";
+            this.columnHeader19.Width = 87;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Белки";
+            this.columnHeader20.Width = 92;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "Жиры";
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "Углеводы";
             // 
             // label4
             // 
@@ -884,6 +960,24 @@ namespace Dietpitanie
             this.tabPage4.Text = "Предложения";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // suggestWeightLabel
+            // 
+            this.suggestWeightLabel.AutoSize = true;
+            this.suggestWeightLabel.Location = new System.Drawing.Point(427, 144);
+            this.suggestWeightLabel.Name = "suggestWeightLabel";
+            this.suggestWeightLabel.Size = new System.Drawing.Size(104, 13);
+            this.suggestWeightLabel.TabIndex = 6;
+            this.suggestWeightLabel.Text = "suggestWeightLabel";
+            // 
+            // suggestNameLabel
+            // 
+            this.suggestNameLabel.AutoSize = true;
+            this.suggestNameLabel.Location = new System.Drawing.Point(427, 107);
+            this.suggestNameLabel.Name = "suggestNameLabel";
+            this.suggestNameLabel.Size = new System.Drawing.Size(98, 13);
+            this.suggestNameLabel.TabIndex = 5;
+            this.suggestNameLabel.Text = "suggestNameLabel";
+            // 
             // buttonRefresh
             // 
             this.buttonRefresh.Location = new System.Drawing.Point(430, 48);
@@ -948,23 +1042,60 @@ namespace Dietpitanie
             this.columnHeader16.Text = "Ккал";
             this.columnHeader16.Width = 65;
             // 
-            // suggestNameLabel
+            // groupBox1
             // 
-            this.suggestNameLabel.AutoSize = true;
-            this.suggestNameLabel.Location = new System.Drawing.Point(427, 107);
-            this.suggestNameLabel.Name = "suggestNameLabel";
-            this.suggestNameLabel.Size = new System.Drawing.Size(98, 13);
-            this.suggestNameLabel.TabIndex = 5;
-            this.suggestNameLabel.Text = "suggestNameLabel";
+            this.groupBox1.Controls.Add(this.radioButton3);
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(735, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 149);
+            this.groupBox1.TabIndex = 33;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Режим коррекции";
             // 
-            // suggestWeightLabel
+            // radioButton1
             // 
-            this.suggestWeightLabel.AutoSize = true;
-            this.suggestWeightLabel.Location = new System.Drawing.Point(427, 144);
-            this.suggestWeightLabel.Name = "suggestWeightLabel";
-            this.suggestWeightLabel.Size = new System.Drawing.Size(104, 13);
-            this.suggestWeightLabel.TabIndex = 6;
-            this.suggestWeightLabel.Text = "suggestWeightLabel";
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(20, 24);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(79, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Похудение";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(20, 59);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(62, 17);
+            this.radioButton2.TabIndex = 34;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Баланс";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(20, 94);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(89, 17);
+            this.radioButton3.TabIndex = 35;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Потолщение";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(654, 36);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 140);
+            this.button1.TabIndex = 34;
+            this.button1.Text = "Жмак";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainWindow
             // 
@@ -988,6 +1119,8 @@ namespace Dietpitanie
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1079,6 +1212,19 @@ namespace Dietpitanie
         private Label toEatFoodLabel;
         private Label suggestWeightLabel;
         private Label suggestNameLabel;
+        private ListView menuList;
+        private ColumnHeader columnHeader17;
+        private ColumnHeader columnHeader18;
+        private ColumnHeader columnHeader19;
+        private ColumnHeader columnHeader20;
+        private ColumnHeader columnHeader21;
+        private ColumnHeader columnHeader22;
+        private Button makeMenuButton;
+        private GroupBox groupBox1;
+        private Button button1;
+        private RadioButton radioButton3;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }
 

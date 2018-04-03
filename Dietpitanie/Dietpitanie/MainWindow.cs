@@ -10,7 +10,6 @@ namespace Dietpitanie
         private FoodList _foodList;
         private DishList _dishList;
         private Food _food;
-        private Dish _dish;
         private Human _human;
         private DBController _dbController;
         private MenuMaker _menuMaker;
@@ -106,12 +105,6 @@ namespace Dietpitanie
                     toNormProteins.Text = _human.LeftProteins.ToString();
                     toNormFats.Text = _human.LeftFats.ToString();
                     toNormCarbohydrates.Text = _human.LeftCarbohydrates.ToString();
-                    _menuMaker = new MenuMaker(_dishList,_human);
-                    _menuMaker.CreateBreakfast();
-                    _menuMaker.CreateLunch();
-                    _menuMaker.CreateSupper();
-
-
                 }
                 else resultLabel.Text = @"Введите данные ещё раз";
             }
@@ -320,15 +313,127 @@ namespace Dietpitanie
                 if (weight1 > weight2)
                 {
                     suggestNameLabel.Text = food.Name;
-                    suggestWeightLabel.Text = @"100 - " + weight2.ToString() + @" г.";
+                    suggestWeightLabel.Text = $@"100 - {weight2}  г.";
                 }
                 else
                 {
                     suggestNameLabel.Text = food.Name;
-                    suggestWeightLabel.Text = @"100 - " + weight1.ToString() + @" г.";
+                    suggestWeightLabel.Text = $@"100 - {weight1}  г.";
                 }
 
             }
+        }
+
+        private void makeMenuButton_Click(object sender, EventArgs e)
+        {
+            _menuMaker = new MenuMaker(_dishList, _human);
+            _menuMaker.CreateBreakfast();
+            _menuMaker.CreateLunch();
+            _menuMaker.CreateSupper();
+            menuList.Items.Clear();
+            List<Dish> list = new List<Dish>();
+            list.Add(_menuMaker.MenuList.GetDish(0, 0));
+            list.Add(_menuMaker.MenuList.GetDish(0, 1));
+            list.Add(_menuMaker.MenuList.GetDish(1, 0));
+            list.Add(_menuMaker.MenuList.GetDish(1, 1));
+            list.Add(_menuMaker.MenuList.GetDish(2, 0));
+            list.Add(_menuMaker.MenuList.GetDish(2, 1));
+
+            for (int i = 0; i < 6; i++)
+            {
+
+                ListViewItem item = new ListViewItem(list[i].Name);
+                item.SubItems.Add(list[i].Weight.ToString());
+                item.SubItems.Add(list[i].Calories.ToString());
+                item.SubItems.Add(list[i].Proteins.ToString());
+                item.SubItems.Add(list[i].Fats.ToString());
+                item.SubItems.Add(list[i].Carbohydrates.ToString());
+                menuList.Items.Add(item);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double calor = _human.Calories;
+            if (radioButton1.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories = calor * 0.85;
+                    _human.Correction = 0;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories *= 1;
+                        _human.Correction = 0;
+                    }
+                    else
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor / 1.15 * 0.85;
+                            _human.Correction = 0;
+                        }
+                    }  
+                }
+            }
+            if (radioButton2.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories *= 1;
+                    _human.Correction = 1;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories = calor / 0.85;
+                        _human.Correction = 1;
+                    }
+                    else
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor / 1.15;
+                            _human.Correction = 1;
+                        }
+                    }
+                    
+                }
+                
+            }
+            if (radioButton3.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories =calor * 1.15;
+                    _human.Correction = 2;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories = (calor / 0.85) * 1.15;
+                        _human.Correction = 2;
+                    }
+                    else 
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor * 1;
+                            _human.Correction = 2;
+                        }
+                      
+                    }
+                }
+               
+            }
+
+            normCalories.Text = _human.Calories.ToString();
         }
     }
 }
