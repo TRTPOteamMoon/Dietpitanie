@@ -344,10 +344,10 @@ namespace Dietpitanie
 
                 ListViewItem item = new ListViewItem(list[i].Name);
                 item.SubItems.Add(list[i].Weight.ToString());
-                item.SubItems.Add(list[i].Calories.ToString());
-                item.SubItems.Add(list[i].Proteins.ToString());
-                item.SubItems.Add(list[i].Fats.ToString());
-                item.SubItems.Add(list[i].Carbohydrates.ToString());
+                item.SubItems.Add((list[i].Calories*list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Proteins * list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Fats * list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Carbohydrates * list[i].Weight * 0.01).ToString());
                 menuList.Items.Add(item);
             }
 
