@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -9,9 +10,9 @@ namespace Dietpitanie
         private FoodList _foodList;
         private DishList _dishList;
         private Food _food;
-        private Dish _dish;
         private Human _human;
         private DBController _dbController;
+        private MenuMaker _menuMaker;
         public MainWindow()
         {
             InitializeComponent();
@@ -20,13 +21,14 @@ namespace Dietpitanie
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
+            suggestNameLabel.Text = "";
+            suggestWeightLabel.Text = "";
             weightLabel.Text = "";
             heightLabel.Text = "";
             ageLabel.Text = "";
             resultLabel.Text = "";
             caloriesLabel.Text = "";
             checkToEatWeight.Text = "";
-            chekEatLabel.Text = "";
             buttonCalculate.Enabled = true;
             _human =new Human();
             _dbController = new DBController();
@@ -103,7 +105,6 @@ namespace Dietpitanie
                     toNormProteins.Text = _human.LeftProteins.ToString();
                     toNormFats.Text = _human.LeftFats.ToString();
                     toNormCarbohydrates.Text = _human.LeftCarbohydrates.ToString();
-
                 }
                 else resultLabel.Text = @"Введите данные ещё раз";
             }
@@ -168,38 +169,24 @@ namespace Dietpitanie
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
+            this.suggestList.Items.Clear();
+            List<Food> suggestList = new List<Food>();
+            for (int i = 0; i < _foodList.LengthListFood(0); i++)
+            {
 
-            // DB UPDATED
-            //if (_human != null)
-            //{
-            //    listView3.Items.Clear();
-            //    SQLiteCommand CMD = DB.CreateCommand();
-            //    string type = foodType.Text;
-            //    if (type == "все виды")
-            //    {
-            //        CMD.CommandText = "select * from Food";
-            //    }
-            //    else
-            //    {
-            //        CMD.CommandText = "select * from Food where type ='" + type.ToUpper() + "'";
-            //    }
-            //    SQLiteDataReader reader = CMD.ExecuteReader();
-            //    while (reader.Read())
-            //    {
-            //        ListViewItem item = new ListViewItem(reader["Name"].ToString());
-            //        item.SubItems.Add(reader["Proteins"].ToString());
-            //        item.SubItems.Add(reader["Fats"].ToString());
-            //        item.SubItems.Add(reader["Carbohydrates"].ToString());
-            //        item.SubItems.Add(reader["Calories"].ToString());
-            //        if (Convert.ToDouble(item.SubItems[1].Text) <= _human.Proteins - proteins && Convert.ToDouble(item.SubItems[2].Text) <= _human.Fats - fats &&
-            //            Convert.ToDouble(item.SubItems[3].Text) <= _human.Carbohydrates - carbohydrates)
-            //        {
-            //            listView3.Items.Add(item);
-            //        }
-            //    }
-            //
-            //}
-
+                ListViewItem item = new ListViewItem(_foodList.GetFood(0, i).Name);
+                item.SubItems.Add(_foodList.GetFood(0, i).Proteins.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
+                item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
+                if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories&&
+                Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                {
+                    suggestList.Add(_foodList.GetFood(0, i));
+                    this.suggestList.Items.Add(item);
+                }
+            }
+            _human.SuggestFoodList = suggestList;
         }
 
         private void ToEatListViewSelectedIndexChanged(object sender, EventArgs e)
@@ -313,6 +300,141 @@ namespace Dietpitanie
             }
         }
 
+        private void suggestList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (suggestList.SelectedItems.Count == 1)
+            {
+                var position = suggestList.SelectedIndices[0];
+                List<Food> foodlist = new List<Food>(0);
+                   foodlist = _human.SuggestFoodList;
+                Food food = foodlist[position];
+                double weight1 = _human.LeftCalories / food.Calories * 100;
+                double weight2 = _human.LeftCarbohydrates / food.Carbohydrates * 100;
+                if (weight1 > weight2)
+                {
+                    suggestNameLabel.Text = food.Name;
+                    suggestWeightLabel.Text = $@"100 - {weight2}  г.";
+                }
+                else
+                {
+                    suggestNameLabel.Text = food.Name;
+                    suggestWeightLabel.Text = $@"100 - {weight1}  г.";
+                }
+
+            }
+        }
+
+        private void makeMenuButton_Click(object sender, EventArgs e)
+        {
+            _menuMaker = new MenuMaker(_dishList, _human);
+            _menuMaker.CreateBreakfast();
+            _menuMaker.CreateLunch();
+            _menuMaker.CreateSupper();
+            menuList.Items.Clear();
+            List<Dish> list = new List<Dish>();
+            list.Add(_menuMaker.MenuList.GetDish(0, 0));
+            list.Add(_menuMaker.MenuList.GetDish(0, 1));
+            list.Add(_menuMaker.MenuList.GetDish(1, 0));
+            list.Add(_menuMaker.MenuList.GetDish(1, 1));
+            list.Add(_menuMaker.MenuList.GetDish(2, 0));
+            list.Add(_menuMaker.MenuList.GetDish(2, 1));
+
+            for (int i = 0; i < 6; i++)
+            {
+
+                ListViewItem item = new ListViewItem(list[i].Name);
+                item.SubItems.Add(list[i].Weight.ToString());
+                item.SubItems.Add((list[i].Calories*list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Proteins * list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Fats * list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Carbohydrates * list[i].Weight * 0.01).ToString());
+                menuList.Items.Add(item);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double calor = _human.Calories;
+            if (radioButton1.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories = calor * 0.85;
+                    _human.Correction = 0;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories *= 1;
+                        _human.Correction = 0;
+                    }
+                    else
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor / 1.15 * 0.85;
+                            _human.Correction = 0;
+                        }
+                    }  
+                }
+            }
+            if (radioButton2.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories *= 1;
+                    _human.Correction = 1;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories = calor / 0.85;
+                        _human.Correction = 1;
+                    }
+                    else
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor / 1.15;
+                            _human.Correction = 1;
+                        }
+                    }
+                    
+                }
+                
+            }
+            if (radioButton3.Checked)
+            {
+                if (_human.Correction == 1)
+                {
+                    _human.Calories =calor * 1.15;
+                    _human.Correction = 2;
+                }
+                else
+                {
+                    if (_human.Correction == 0)
+                    {
+                        _human.Calories = (calor / 0.85) * 1.15;
+                        _human.Correction = 2;
+                    }
+                    else 
+                    {
+                        if (_human.Correction == 2)
+                        {
+                            _human.Calories = calor * 1;
+                            _human.Correction = 2;
+                        }
+                      
+                    }
+                }
+               
+            }
+
+            normCalories.Text = _human.Calories.ToString();
+
         private void bAdd_Click(object sender, EventArgs e)
         {
             double fats = Convert.ToDouble(Fats.Text);
@@ -323,6 +445,7 @@ namespace Dietpitanie
             Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
 
             _foodList.AddFood(tFood, 4);
+
         }
     }
 }

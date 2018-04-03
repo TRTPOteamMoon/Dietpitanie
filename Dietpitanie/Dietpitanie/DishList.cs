@@ -29,5 +29,6 @@ namespace Dietpitanie
         {
             return DishCatalog[i][j];
         }
+        
     }
 }
