@@ -13,10 +13,11 @@ namespace Dietpitanie
         private Human _human;
         private DBController _dbController;
         private MenuMaker _menuMaker;
+
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
 
         public void MainWindowLoad(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace Dietpitanie
             caloriesLabel.Text = "";
             checkToEatWeight.Text = "";
             buttonCalculate.Enabled = true;
-            _human =new Human();
+            _human = new Human();
             _dbController = new DBController();
             _dbController.ConnectDb();
             _foodList = new FoodList(_dbController.GetFoodTypeLength());
@@ -39,15 +40,16 @@ namespace Dietpitanie
             _dishList = _dbController.GeDishList();
             for (int i = 0; i < _foodList.LengthListFood(0); i++)
             {
-                
+
                 ListViewItem item = new ListViewItem(_foodList.GetFood(0, i).Name);
                 item.SubItems.Add(_foodList.GetFood(0, i).Proteins.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
                 toEatListView.Items.Add(item);
-            }        
+            }
         }
+
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
             try
@@ -70,6 +72,7 @@ namespace Dietpitanie
                     {
                         _human.Sex = 0;
                     }
+
                     _human.Count();
 
                     eatProteins.Text = _human.EatProteins.ToString();
@@ -118,7 +121,7 @@ namespace Dietpitanie
         private void height_TextChanged(object sender, EventArgs e)
         {
             Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
-            if (pattern.IsMatch(height.Text)||height.Text.Length==0)
+            if (pattern.IsMatch(height.Text) || height.Text.Length == 0)
             {
                 heightLabel.Text = @"";
             }
@@ -179,13 +182,14 @@ namespace Dietpitanie
                 item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
-                if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories&&
-                Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories &&
+                    Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
                 {
                     suggestList.Add(_foodList.GetFood(0, i));
                     this.suggestList.Items.Add(item);
                 }
             }
+
             _human.SuggestFoodList = suggestList;
         }
 
@@ -238,7 +242,7 @@ namespace Dietpitanie
                     var position = toEatListView.SelectedIndices[0];
                     string type = foodType.Text;
                     int index = _foodList.IndexListFood(type);
-                    _food = _foodList.GetFood(index,position);
+                    _food = _foodList.GetFood(index, position);
                     _food.Weight = Convert.ToDouble(toEatWeight.Text);
                     _human.EatSomeFood(_food);
                     eatProteins.Text = _human.EatProteins.ToString();
@@ -265,7 +269,7 @@ namespace Dietpitanie
             {
                 Console.WriteLine(exception);
                 throw;
-            } 
+            }
         }
 
         private void buttonEject_Click(object sender, EventArgs e)
@@ -300,13 +304,25 @@ namespace Dietpitanie
             }
         }
 
+        private void bAdd_Click(object sender, EventArgs e)
+        {
+            double fats = Convert.ToDouble(Fats.Text);
+            double proteins = Convert.ToDouble(Proteins.Text);
+            double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
+            double calories = Convert.ToDouble(Calories.Text);
+            string name = Name1.Text;
+            Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
+
+            _foodList.AddFood(tFood, foodType2.SelectedIndex);
+        }
+
         private void suggestList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (suggestList.SelectedItems.Count == 1)
             {
                 var position = suggestList.SelectedIndices[0];
                 List<Food> foodlist = new List<Food>(0);
-                   foodlist = _human.SuggestFoodList;
+                foodlist = _human.SuggestFoodList;
                 Food food = foodlist[position];
                 double weight1 = _human.LeftCalories / food.Calories * 100;
                 double weight2 = _human.LeftCarbohydrates / food.Carbohydrates * 100;
@@ -344,7 +360,7 @@ namespace Dietpitanie
 
                 ListViewItem item = new ListViewItem(list[i].Name);
                 item.SubItems.Add(list[i].Weight.ToString());
-                item.SubItems.Add((list[i].Calories*list[i].Weight * 0.01).ToString());
+                item.SubItems.Add((list[i].Calories * list[i].Weight * 0.01).ToString());
                 item.SubItems.Add((list[i].Proteins * list[i].Weight * 0.01).ToString());
                 item.SubItems.Add((list[i].Fats * list[i].Weight * 0.01).ToString());
                 item.SubItems.Add((list[i].Carbohydrates * list[i].Weight * 0.01).ToString());
@@ -377,9 +393,10 @@ namespace Dietpitanie
                             _human.Calories = calor / 1.15 * 0.85;
                             _human.Correction = 0;
                         }
-                    }  
+                    }
                 }
             }
+
             if (radioButton2.Checked)
             {
                 if (_human.Correction == 1)
@@ -402,15 +419,16 @@ namespace Dietpitanie
                             _human.Correction = 1;
                         }
                     }
-                    
+
                 }
-                
+
             }
+
             if (radioButton3.Checked)
             {
                 if (_human.Correction == 1)
                 {
-                    _human.Calories =calor * 1.15;
+                    _human.Calories = calor * 1.15;
                     _human.Correction = 2;
                 }
                 else
@@ -420,32 +438,20 @@ namespace Dietpitanie
                         _human.Calories = (calor / 0.85) * 1.15;
                         _human.Correction = 2;
                     }
-                    else 
+                    else
                     {
                         if (_human.Correction == 2)
                         {
                             _human.Calories = calor * 1;
                             _human.Correction = 2;
                         }
-                      
+
                     }
                 }
-               
+
             }
 
             normCalories.Text = _human.Calories.ToString();
-
-        private void bAdd_Click(object sender, EventArgs e)
-        {
-            double fats = Convert.ToDouble(Fats.Text);
-            double proteins = Convert.ToDouble(Proteins.Text);
-            double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
-            double calories = Convert.ToDouble(Calories.Text);
-            string name = Name1.Text;
-            Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
-
-            _foodList.AddFood(tFood, 4);
-
         }
     }
 }
