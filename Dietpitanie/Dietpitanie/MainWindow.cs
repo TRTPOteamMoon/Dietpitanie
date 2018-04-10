@@ -183,7 +183,8 @@ namespace Dietpitanie
                 item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
                 item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
                 if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories &&
-                    Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                    Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates &&
+                    Convert.ToDouble(item.SubItems[4].Text) > 0)
                 {
                     suggestList.Add(_foodList.GetFood(0, i));
                     this.suggestList.Items.Add(item);
