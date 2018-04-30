@@ -10,6 +10,7 @@ namespace Dietpitanie
         private FoodList _foodList;
         private DishList _dishList;
         private Food _food;
+        private Dish _dish;
         private Human _human;
         private DBController _dbController;
         private MenuMaker _menuMaker;
@@ -219,15 +220,46 @@ namespace Dietpitanie
             toEatListView.Items.Clear();
             string type = foodType.Text;
             int index = _foodList.IndexListFood(type);
-            for (int i = 0; i < _foodList.LengthListFood(index); i++)
+            if (index == 0)
             {
-                ListViewItem item = new ListViewItem(_foodList.GetFood(index, i).Name);
-                item.SubItems.Add(_foodList.GetFood(index, i).Proteins.ToString());
-                item.SubItems.Add(_foodList.GetFood(index, i).Fats.ToString());
-                item.SubItems.Add(_foodList.GetFood(index, i).Carbohydrates.ToString());
-                item.SubItems.Add(_foodList.GetFood(index, i).Calories.ToString());
-                toEatListView.Items.Add(item);
+                for (int i = 0; i < _foodList.LengthListFood(index); i++)
+                {
+                    ListViewItem item = new ListViewItem(_foodList.GetFood(index, i).Name);
+                    item.SubItems.Add(_foodList.GetFood(index, i).Proteins.ToString());
+                    item.SubItems.Add(_foodList.GetFood(index, i).Fats.ToString());
+                    item.SubItems.Add(_foodList.GetFood(index, i).Carbohydrates.ToString());
+                    item.SubItems.Add(_foodList.GetFood(index, i).Calories.ToString());
+                    toEatListView.Items.Add(item);
+                }
             }
+            else
+            {
+                if (index < 9)
+                {
+                    for (int i = 0; i < _foodList.LengthListFood(index); i++)
+                    {
+                        ListViewItem item = new ListViewItem(_foodList.GetFood(index, i).Name);
+                        item.SubItems.Add(_foodList.GetFood(index, i).Proteins.ToString());
+                        item.SubItems.Add(_foodList.GetFood(index, i).Fats.ToString());
+                        item.SubItems.Add(_foodList.GetFood(index, i).Carbohydrates.ToString());
+                        item.SubItems.Add(_foodList.GetFood(index, i).Calories.ToString());
+                        toEatListView.Items.Add(item);
+                    }
+                }
+                else
+                {
+                    int j = index - 9;
+                    for (int i = 0; i < _dishList.LengthListDish(j); i++)
+                    {
+                        ListViewItem item = new ListViewItem(_dishList.GetDish(j, i).Name);
+                        item.SubItems.Add(_dishList.GetDish(j, i).Proteins.ToString());
+                        item.SubItems.Add(_dishList.GetDish(j, i).Fats.ToString());
+                        item.SubItems.Add(_dishList.GetDish(j, i).Carbohydrates.ToString());
+                        item.SubItems.Add(_dishList.GetDish(j, i).Calories.ToString());
+                        toEatListView.Items.Add(item);
+                    }
+                }
+            }  
         }
 
         private void buttonEat_Click(object sender, EventArgs e)
@@ -242,22 +274,52 @@ namespace Dietpitanie
                     var position = toEatListView.SelectedIndices[0];
                     string type = foodType.Text;
                     int index = _foodList.IndexListFood(type);
-                    _food = _foodList.GetFood(index, position);
-                    _food.Weight = Convert.ToDouble(toEatWeight.Text);
-                    _human.EatSomeFood(_food);
+                    if (index < 9)
+                    {
+                        _food = _foodList.GetFood(index, position);
+                        _food.Weight = Convert.ToDouble(toEatWeight.Text);
+                        _human.EatSomeFood(_food);
+
+
+                        
+                    }
+                    else
+                    {
+                        index -= 9;
+                        _dish = _dishList.GetDish(index, position);
+                        _dish.Weight = Convert.ToDouble(toEatWeight.Text);
+                        _human.EatSomeDish(_dish);
+                    }
+                    toRejectListView.Items.Clear();
+                    for (int i = 0; i < _human.EatDish.Count; i++)
+                    {
+                        _dish = _human.EatDish[i];
+                        ListViewItem item = new ListViewItem(_dish.Name);
+                        item.SubItems.Add(_dish.Weight.ToString());
+                        item.SubItems.Add((_dish.Calories * _dish.Weight * 0.01).ToString());
+                        item.SubItems.Add((_dish.Proteins * _dish.Weight * 0.01).ToString());
+                        item.SubItems.Add((_dish.Fats * _dish.Weight * 0.01).ToString());
+                        item.SubItems.Add((_dish.Carbohydrates * _dish.Weight * 0.01).ToString());
+                        toRejectListView.Items.Add(item);
+                    }
+
+                    for (int i = 0; i < _human.EatFood.Count; i++)
+                    {
+                        _food = _human.EatFood[i];
+                        ListViewItem item = new ListViewItem(_food.Name);
+                        item.SubItems.Add(_food.Weight.ToString());
+                        item.SubItems.Add((_food.Calories * _food.Weight * 0.01).ToString());
+                        item.SubItems.Add((_food.Proteins * _food.Weight * 0.01).ToString());
+                        item.SubItems.Add((_food.Fats * _food.Weight * 0.01).ToString());
+                        item.SubItems.Add((_food.Carbohydrates * _food.Weight * 0.01).ToString());
+                        toRejectListView.Items.Add(item);
+                    }
+                   
                     eatProteins.Text = _human.EatProteins.ToString();
                     eatFats.Text = _human.EatFats.ToString();
                     eatCarbohydrates.Text = _human.EatCarbohydrates.ToString();
                     eatCalories.Text = _human.EatCalories.ToString();
                     toEatWeight.Clear();
-
-                    ListViewItem item = new ListViewItem(_food.Name);
-                    item.SubItems.Add(_food.Weight.ToString());
-                    item.SubItems.Add((_food.Calories * _food.Weight * 0.01).ToString());
-                    item.SubItems.Add((_food.Proteins * _food.Weight * 0.01).ToString());
-                    item.SubItems.Add((_food.Fats * _food.Weight * 0.01).ToString());
-                    item.SubItems.Add((_food.Carbohydrates * _food.Weight * 0.01).ToString());
-                    toRejectListView.Items.Add(item);
 
                     toNormCalories.Text = _human.LeftCalories.ToString();
                     toNormProteins.Text = _human.LeftProteins.ToString();
@@ -279,10 +341,16 @@ namespace Dietpitanie
                 if (toRejectListView.SelectedItems.Count == 1)
                 {
                     var position = toRejectListView.SelectedIndices[0];
-                    string type = foodType.Text;
                     toRejectListView.Items.Remove(toRejectListView.Items[position]);
-                    _human.RejectEatSomeFood(position);
 
+                    if (position > _human.EatDish.Count-1)
+                    {
+                        _human.RejectEatSomeFood(position-_human.EatDish.Count);
+                    }
+                    else
+                    {
+                        _human.RejectEatSomeDish(position);
+                    }
                     eatProteins.Text = _human.EatProteins.ToString();
                     eatFats.Text = _human.EatFats.ToString();
                     eatCarbohydrates.Text = _human.EatCarbohydrates.ToString();

@@ -15,6 +15,7 @@ namespace Dietpitanie
         public double Calories { get; set; }
         public double Carbohydrates { get; set; }
         public List<Food> EatFood { get; set; }
+        public List<Dish> EatDish { get; set; }
         public double EatProteins { get; set; }
         public double EatFats { get; set; }
         public double EatCarbohydrates { get; set; }
@@ -34,6 +35,7 @@ namespace Dietpitanie
             Age = age;
             Sex = sex;
             EatFood = new List<Food>();
+            EatDish = new List<Dish>();
             MenuList = new List<Dish>();
             SuggestFoodList = new List<Food>();
             EatCalories = 0;
@@ -50,6 +52,7 @@ namespace Dietpitanie
             Age = 0;
             Sex = 0;
             EatFood = new List<Food>();
+            EatDish = new List<Dish>();
             MenuList = new List<Dish>();
             SuggestFoodList = new List<Food>();
             EatCalories = 0;
@@ -157,7 +160,7 @@ namespace Dietpitanie
             EatCarbohydrates = 0;
             EatFats = 0;
             EatProteins = 0;
-            if (EatFood.Count == 0)
+            if (EatFood.Count == 0 && EatDish.Count == 0)
             {
                 LeftCalories = 0;
                 LeftProteins = 0;
@@ -173,11 +176,19 @@ namespace Dietpitanie
                 EatFats += t.Fats * t.Weight*0.01;
                 EatCarbohydrates += t.Carbohydrates * t.Weight*0.01;
             }
-
+            foreach (var t in EatDish)
+            {
+                EatCalories += t.Calories * t.Weight * 0.01;
+                EatProteins += t.Proteins * t.Weight * 0.01;
+                EatFats += t.Fats * t.Weight * 0.01;
+                EatCarbohydrates += t.Carbohydrates * t.Weight * 0.01;
+            }
             LeftCalories = Calories - EatCalories;
             LeftProteins = Proteins - EatProteins;
             LeftFats = Fats - EatFats;
             LeftCarbohydrates = Carbohydrates - EatCarbohydrates;
+
+
         }
 
         public void RejectEatSomeFood(int i)
@@ -189,6 +200,18 @@ namespace Dietpitanie
         public void EatSomeFood(Food food)
         {
             EatFood.Add(food);
+            Count();
+        }
+
+        public void RejectEatSomeDish(int i)
+        {
+            EatDish.RemoveAt(i);
+            Count();
+        }
+
+        public void EatSomeDish(Dish dish)
+        {
+            EatDish.Add(dish);
             Count();
         }
     }
