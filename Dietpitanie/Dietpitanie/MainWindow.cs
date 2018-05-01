@@ -814,6 +814,7 @@ namespace Dietpitanie
             }
             else
             {
+            
                 MessageBox.Show(@"Такого пользователя не существует");
             }
         }
