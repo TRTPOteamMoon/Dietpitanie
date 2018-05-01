@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBController.cs" />
+    <Compile Include="DbController.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="DishList.cs" />
     <Compile Include="Food.cs" />

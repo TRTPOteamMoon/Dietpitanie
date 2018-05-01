@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Dietpitanie
 {
@@ -144,14 +145,14 @@ namespace Dietpitanie
                 }
             }
 
-            Calories = Bmr;
+            Calories = Math.Round(Bmr,2);
         }
 
         public void CalculateMacroelemnts()
         {
-            Proteins = Weight * 1.2;
-            Fats = Weight * 0.5;
-            Carbohydrates = (Bmr - Proteins * 4 - Fats * 9) / 4;
+            Proteins = Math.Round(Weight * 1.3,2);
+            Fats = Math.Round(Weight * 0.5,2);
+            Carbohydrates = Math.Round((Bmr - Proteins * 4 - Fats * 9) / 4,2);
         }
 
         public void Count()
@@ -175,6 +176,7 @@ namespace Dietpitanie
                 EatProteins += t.Proteins * t.Weight*0.01;
                 EatFats += t.Fats * t.Weight*0.01;
                 EatCarbohydrates += t.Carbohydrates * t.Weight*0.01;
+
             }
             foreach (var t in EatDish)
             {
@@ -183,10 +185,16 @@ namespace Dietpitanie
                 EatFats += t.Fats * t.Weight * 0.01;
                 EatCarbohydrates += t.Carbohydrates * t.Weight * 0.01;
             }
-            LeftCalories = Calories - EatCalories;
-            LeftProteins = Proteins - EatProteins;
-            LeftFats = Fats - EatFats;
-            LeftCarbohydrates = Carbohydrates - EatCarbohydrates;
+
+            EatCalories = Math.Round(EatCalories, 2);
+            EatCarbohydrates = Math.Round(EatCarbohydrates, 2);
+            EatProteins = Math.Round(EatProteins, 2);
+            EatFats = Math.Round(EatFats, 2);
+
+            LeftCalories = Math.Round(Calories - EatCalories,2);
+            LeftProteins = Math.Round(Proteins - EatProteins,2);
+            LeftFats = Math.Round(Fats - EatFats,2);
+            LeftCarbohydrates = Math.Round(Carbohydrates - EatCarbohydrates,2);
 
 
         }
