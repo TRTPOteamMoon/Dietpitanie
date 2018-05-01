@@ -40,8 +40,7 @@ namespace Dietpitanie
         public void ConnectDb()
         {
             string location = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            location = location.Remove(location.Length - 25);
-            Db = new SQLiteConnection(@"Data source =" + location + "Database.db; Version = 3");
+            Db = new SQLiteConnection(@"Data Source = Database.db; Version = 3");
             Db.Open();
         }
 

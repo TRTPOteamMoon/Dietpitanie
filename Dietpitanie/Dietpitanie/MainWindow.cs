@@ -514,9 +514,7 @@ namespace Dietpitanie
                             _human.Correction = 1;
                         }
                     }
-
                 }
-
             }
 
             if (radioButton3.Checked)
