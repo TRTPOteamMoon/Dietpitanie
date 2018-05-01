@@ -9,6 +9,11 @@
         public double Weight { get; set; }
         public double Calories { get; set; }
 
+        public Dish()
+        {
+
+        }
+
         public Dish(string name, double proteins, double fats, double carbohydrates, double calories)
         {
             Name = name;

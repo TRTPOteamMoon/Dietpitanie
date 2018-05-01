@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace Dietpitanie
 {
@@ -14,6 +16,7 @@ namespace Dietpitanie
         private Human _human;
         private DbController _dbController;
         private MenuMaker _menuMaker;
+        private string _login;
 
         public MainWindow()
         {
@@ -147,25 +150,31 @@ namespace Dietpitanie
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            this.suggestList.Items.Clear();
-            List<Food> suggestList = new List<Food>();
-            for (int i = 0; i < _foodList.LengthListFood(0); i++)
+            GenerateSuggestion();
+        }
+
+        private void GenerateSuggestion()
+        {
+            if (_human.Calories > 0)
             {
-
-                ListViewItem item = new ListViewItem(_foodList.GetFood(0, i).Name);
-                item.SubItems.Add(_foodList.GetFood(0, i).Proteins.ToString());
-                item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
-                item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
-                item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
-                if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories &&
-                    Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                this.suggestList.Items.Clear();
+                List<Food> suggestList = new List<Food>();
+                for (int i = 0; i < _foodList.LengthListFood(0); i++)
                 {
-                    suggestList.Add(_foodList.GetFood(0, i));
-                    this.suggestList.Items.Add(item);
+                    ListViewItem item = new ListViewItem(_foodList.GetFood(0, i).Name);
+                    item.SubItems.Add(_foodList.GetFood(0, i).Proteins.ToString());
+                    item.SubItems.Add(_foodList.GetFood(0, i).Fats.ToString());
+                    item.SubItems.Add(_foodList.GetFood(0, i).Carbohydrates.ToString());
+                    item.SubItems.Add(_foodList.GetFood(0, i).Calories.ToString());
+                    if (Convert.ToDouble(item.SubItems[4].Text) <= _human.LeftCalories &&
+                        Convert.ToDouble(item.SubItems[3].Text) <= _human.LeftCarbohydrates)
+                    {
+                        suggestList.Add(_foodList.GetFood(0, i));
+                        this.suggestList.Items.Add(item);
+                    }
                 }
+                _human.SuggestFoodList = suggestList;
             }
-
-            _human.SuggestFoodList = suggestList;
         }
 
         private void ToEatListViewSelectedIndexChanged(object sender, EventArgs e)
@@ -186,6 +195,11 @@ namespace Dietpitanie
 
         private void MainWindowClosed(object sender, FormClosedEventArgs e)
         {
+            if (login.TextLength > 0)
+            {
+                string str = JsonConvert.SerializeObject(_human);
+                File.WriteAllText(login.Text, str);
+            }
             _dbController.DisconnectDb();
         }
 
@@ -349,32 +363,49 @@ namespace Dietpitanie
 
         private void bAdd_Click(object sender, EventArgs e)
         {
-            double fats = Convert.ToDouble(Fats.Text);
-            double proteins = Convert.ToDouble(Proteins.Text);
-            double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
-            double calories = Convert.ToDouble(Calories.Text);
-            string name = Name1.Text.ToUpper();
-            Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
-            int comp = 0;
-            for (int i = 0; i < _foodList.LengthListFood(0); i++)
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (Calories.Text.Length > 0 &&
+                Fats.Text.Length > 0 &&
+                Proteins.Text.Length > 0 &&
+                Carbohydrates.Text.Length > 0 &&
+                Name1.Text.Length > 0 &&
+                pattern.IsMatch(Calories.Text) &&
+                pattern.IsMatch(Fats.Text) &&
+                pattern.IsMatch(Proteins.Text) &&
+                pattern.IsMatch(Carbohydrates.Text))
             {
-                _food = _foodList.GetFood(0, i);
-                if (name == _food.Name)
-                    comp++;
-            }
+                double fats = Convert.ToDouble(Fats.Text);
+                double proteins = Convert.ToDouble(Proteins.Text);
+                double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
+                double calories = Convert.ToDouble(Calories.Text);
+                string name = Name1.Text.ToUpper();
+                Food tFood = new Food(name, proteins, fats, carbohydrates, calories);
+                int comp = 0;
+                for (int i = 0; i < _foodList.LengthListFood(0); i++)
+                {
+                    _food = _foodList.GetFood(0, i);
+                    if (name == _food.Name)
+                        comp++;
+                }
 
-            if (comp == 0)
-            {
-                _dbController.AddFood(tFood, foodType2.SelectedIndex);
-                MessageBox.Show(@"Продукт успешно добавлен");
-                _foodList = _dbController.GetFoodList();
-                UpdateList();
+                if (comp == 0)
+                {
+                    _dbController.AddFood(tFood, foodType2.SelectedIndex);
+                    MessageBox.Show(@"Продукт успешно добавлен");
+                    _foodList = _dbController.GetFoodList();
+                    UpdateList();
+                }
+                else
+                {
+                    MessageBox.Show(@"Такой продукт уже есть");
+                }
+
             }
             else
             {
-                MessageBox.Show(@"Такой продукт уже есть");
+                MessageBox.Show(@"Введите данные ещё раз");
             }
-          
+
         }
 
         private void suggestList_SelectedIndexChanged(object sender, EventArgs e)
@@ -561,35 +592,231 @@ namespace Dietpitanie
 
         private void dAdd_Click(object sender, EventArgs e)
         {
-            double fats = Convert.ToDouble(Fats.Text);
-            double proteins = Convert.ToDouble(Proteins.Text);
-            double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
-            double calories = Convert.ToDouble(Calories.Text);
-            string name = Name1.Text.ToUpper();
-            name = (" " + name);
-            Dish tDish = new Dish(name, proteins, fats, carbohydrates, calories);
-            int comp = 0;
-            for(int j=0;j<5;j++)
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (Calories.Text.Length > 0 &&
+                Fats.Text.Length > 0 &&
+                Proteins.Text.Length > 0 &&
+                Carbohydrates.Text.Length > 0 &&
+                Name1.Text.Length > 0 &&
+                pattern.IsMatch(Calories.Text) &&
+                pattern.IsMatch(Fats.Text) &&
+                pattern.IsMatch(Proteins.Text) &&
+                pattern.IsMatch(Carbohydrates.Text))
             {
-                for (int i = 0; i < _dishList.LengthListDish(j); i++)
+                double fats = Convert.ToDouble(Fats.Text);
+                double proteins = Convert.ToDouble(Proteins.Text);
+                double carbohydrates = Convert.ToDouble(Carbohydrates.Text);
+                double calories = Convert.ToDouble(Calories.Text);
+                string name = Name1.Text.ToUpper();
+                name = (" " + name);
+                Dish tDish = new Dish(name, proteins, fats, carbohydrates, calories);
+                int comp = 0;
+                for (int j = 0; j < 5; j++)
                 {
-                    _dish = _dishList.GetDish(j, i);
-                    if (name == _dish.Name)
-                        comp++;
+                    for (int i = 0; i < _dishList.LengthListDish(j); i++)
+                    {
+                        _dish = _dishList.GetDish(j, i);
+                        if (name == _dish.Name)
+                            comp++;
+                    }
                 }
-            }
-          
 
-            if (comp == 0)
-            {
-                _dbController.AddDish(tDish, dishType2.SelectedIndex);
-                MessageBox.Show(@"Блюдо успешно добавлено");
-                _dishList = _dbController.GeDishList();
-                UpdateList();
+
+                if (comp == 0)
+                {
+                    _dbController.AddDish(tDish, dishType2.SelectedIndex);
+                    MessageBox.Show(@"Блюдо успешно добавлено");
+                    _dishList = _dbController.GeDishList();
+                    UpdateList();
+                }
+                else
+                {
+                    MessageBox.Show(@"Такое блюдо уже есть");
+                }
             }
             else
             {
-                MessageBox.Show(@"Такое блюдо уже есть");
+                MessageBox.Show(@"Введите данные ещё раз");
+            }
+           
+        }
+
+        private void Proteins_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(Proteins.Text) || Proteins.Text.Length == 0)
+            {
+                label21.Text = @"";
+            }
+            else
+            {
+                label21.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void Fats_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(Fats.Text) || Fats.Text.Length == 0)
+            {
+                label22.Text = @"";
+            }
+            else
+            {
+                label22.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void Carbohydrates_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(Carbohydrates.Text) || Carbohydrates.Text.Length == 0)
+            {
+                label23.Text = @"";
+            }
+            else
+            {
+                label23.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void Calories_TextChanged(object sender, EventArgs e)
+        {
+            Regex pattern = new Regex(@"^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$");
+            if (pattern.IsMatch(Calories.Text) || Calories.Text.Length == 0)
+            {
+                label24.Text = @"";
+            }
+            else
+            {
+                label24.Text = @"Данные введены неправильно";
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(login.Text))
+            {
+                MessageBox.Show(@"Такоей пользователь уже существует");
+            }
+            else
+            {
+                File.Create(login.Text).Close();
+                _login = login.Text;
+                MessageBox.Show(@"Вы успешно зарегистрировались");
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(login.Text))
+            {
+                string str = File.ReadAllText(login.Text);
+                _human = JsonConvert.DeserializeObject<Human>(str);
+                PrintMacroelements();
+                height.Text = _human.Height.ToString();
+                weight.Text = _human.Weight.ToString();
+                age.Text = _human.Weight.ToString();
+                if (_human.Sex == 1)
+                {
+                    gender_male.Checked = true;
+                }    
+                else
+                {
+                    gender_female.Checked = true;
+                }
+
+                if (_human.Correction == 0)
+                    radioButton1.Checked = true;
+
+                if (_human.Correction == 1)
+                    radioButton2.Checked = true;
+
+                if (_human.Correction == 2)
+                    radioButton3.Checked = true;
+
+                normCalories.Text = _human.Calories.ToString();
+                normFats.Text = _human.Fats.ToString();
+                normCarbohydrates.Text = _human.Carbohydrates.ToString();
+                normProteins.Text = _human.Proteins.ToString();
+
+                menuList.Items.Clear();
+                ListViewItem item;
+                foreach (var t in _human.MenuList)
+                {
+                    item = new ListViewItem(t.Name);
+                    item.SubItems.Add(t.Weight.ToString());
+                    item.SubItems.Add((t.Calories * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Proteins * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Fats * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Carbohydrates * t.Weight * 0.01).ToString());
+                    menuList.Items.Add(item);
+                }
+
+                foreach (var t in _human.SuggestFoodList)
+                {
+                    item = new ListViewItem(t.Name);
+                    item.SubItems.Add(t.Weight.ToString());
+                    item.SubItems.Add((t.Calories * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Proteins * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Fats * t.Weight * 0.01).ToString());
+                    item.SubItems.Add((t.Carbohydrates * t.Weight * 0.01).ToString());
+                    suggestList.Items.Add(item);
+                }
+
+                toRejectListView.Items.Clear();
+                foreach (var t in _human.EatDish)
+                {
+                    _dish = t;
+                    item = new ListViewItem(_dish.Name);
+                    item.SubItems.Add(_dish.Weight.ToString());
+                    item.SubItems.Add((_dish.Calories * _dish.Weight * 0.01).ToString());
+                    item.SubItems.Add((_dish.Proteins * _dish.Weight * 0.01).ToString());
+                    item.SubItems.Add((_dish.Fats * _dish.Weight * 0.01).ToString());
+                    item.SubItems.Add((_dish.Carbohydrates * _dish.Weight * 0.01).ToString());
+                    toRejectListView.Items.Add(item);
+                }
+
+                foreach (var t in _human.EatFood)
+                {
+                    _food = t;
+                    item = new ListViewItem(_food.Name);
+                    item.SubItems.Add(_food.Weight.ToString());
+                    item.SubItems.Add((_food.Calories * _food.Weight * 0.01).ToString());
+                    item.SubItems.Add((_food.Proteins * _food.Weight * 0.01).ToString());
+                    item.SubItems.Add((_food.Fats * _food.Weight * 0.01).ToString());
+                    item.SubItems.Add((_food.Carbohydrates * _food.Weight * 0.01).ToString());
+                    toRejectListView.Items.Add(item);
+                }
+
+                MessageBox.Show(@"Вы успешно авторизовались");
+                GenerateSuggestion();
+                if (_human.SuggestFoodList.Count > 0)
+                {
+                    Random rnd = new Random();
+                    int num = rnd.Next(0,_human.SuggestFoodList.Count);
+                    _food = _human.SuggestFoodList[num];
+                    double weight1 = Math.Round(_human.LeftCalories / _food.Calories * 100, MidpointRounding.AwayFromZero);
+                    double weight2 = Math.Round(_human.LeftCarbohydrates / _food.Carbohydrates * 100, MidpointRounding.AwayFromZero);
+                    if (weight1 > weight2)
+                    {
+                        MessageBox.Show($@"Съеште  { _food.Name}{weight2/3} г.");
+                    }
+                    else
+                    {
+                        MessageBox.Show($@"Съеште  { _food.Name} {weight1 / 2} г.");
+                    }                 
+                }
+                else
+                {
+                    MessageBox.Show(@"Нечего предложить съесть");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show(@"Такого пользователя не существует");
             }
         }
     }
