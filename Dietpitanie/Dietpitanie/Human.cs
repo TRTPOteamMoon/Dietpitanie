@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Dietpitanie
 {
@@ -15,6 +16,7 @@ namespace Dietpitanie
         public double Calories { get; set; }
         public double Carbohydrates { get; set; }
         public List<Food> EatFood { get; set; }
+        public List<Dish> EatDish { get; set; }
         public double EatProteins { get; set; }
         public double EatFats { get; set; }
         public double EatCarbohydrates { get; set; }
@@ -34,6 +36,7 @@ namespace Dietpitanie
             Age = age;
             Sex = sex;
             EatFood = new List<Food>();
+            EatDish = new List<Dish>();
             MenuList = new List<Dish>();
             SuggestFoodList = new List<Food>();
             EatCalories = 0;
@@ -50,6 +53,7 @@ namespace Dietpitanie
             Age = 0;
             Sex = 0;
             EatFood = new List<Food>();
+            EatDish = new List<Dish>();
             MenuList = new List<Dish>();
             SuggestFoodList = new List<Food>();
             EatCalories = 0;
@@ -141,14 +145,14 @@ namespace Dietpitanie
                 }
             }
 
-            Calories = Bmr;
+            Calories = Math.Round(Bmr,2);
         }
 
         public void CalculateMacroelemnts()
         {
-            Proteins = Weight * 1.2;
-            Fats = Weight * 0.5;
-            Carbohydrates = (Bmr - Proteins * 4 - Fats * 9) / 4;
+            Proteins = Math.Round(Weight * 1.3,2);
+            Fats = Math.Round(Weight * 0.5,2);
+            Carbohydrates = Math.Round((Bmr - Proteins * 4 - Fats * 9) / 4,2);
         }
 
         public void Count()
@@ -157,7 +161,7 @@ namespace Dietpitanie
             EatCarbohydrates = 0;
             EatFats = 0;
             EatProteins = 0;
-            if (EatFood.Count == 0)
+            if (EatFood.Count == 0 && EatDish.Count == 0)
             {
                 LeftCalories = 0;
                 LeftProteins = 0;
@@ -172,12 +176,27 @@ namespace Dietpitanie
                 EatProteins += t.Proteins * t.Weight*0.01;
                 EatFats += t.Fats * t.Weight*0.01;
                 EatCarbohydrates += t.Carbohydrates * t.Weight*0.01;
+
+            }
+            foreach (var t in EatDish)
+            {
+                EatCalories += t.Calories * t.Weight * 0.01;
+                EatProteins += t.Proteins * t.Weight * 0.01;
+                EatFats += t.Fats * t.Weight * 0.01;
+                EatCarbohydrates += t.Carbohydrates * t.Weight * 0.01;
             }
 
-            LeftCalories = Calories - EatCalories;
-            LeftProteins = Proteins - EatProteins;
-            LeftFats = Fats - EatFats;
-            LeftCarbohydrates = Carbohydrates - EatCarbohydrates;
+            EatCalories = Math.Round(EatCalories, 2);
+            EatCarbohydrates = Math.Round(EatCarbohydrates, 2);
+            EatProteins = Math.Round(EatProteins, 2);
+            EatFats = Math.Round(EatFats, 2);
+
+            LeftCalories = Math.Round(Calories - EatCalories,2);
+            LeftProteins = Math.Round(Proteins - EatProteins,2);
+            LeftFats = Math.Round(Fats - EatFats,2);
+            LeftCarbohydrates = Math.Round(Carbohydrates - EatCarbohydrates,2);
+
+
         }
 
         public void RejectEatSomeFood(int i)
@@ -189,6 +208,18 @@ namespace Dietpitanie
         public void EatSomeFood(Food food)
         {
             EatFood.Add(food);
+            Count();
+        }
+
+        public void RejectEatSomeDish(int i)
+        {
+            EatDish.RemoveAt(i);
+            Count();
+        }
+
+        public void EatSomeDish(Dish dish)
+        {
+            EatDish.Add(dish);
             Count();
         }
     }

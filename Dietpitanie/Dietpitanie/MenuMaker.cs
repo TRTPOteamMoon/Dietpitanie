@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dietpitanie
 {
@@ -10,17 +6,17 @@ namespace Dietpitanie
     {
         public DishList DishList;
         public DishList MenuList;
-        private Human Human;
-        private double[] KashaWeight = {200, 600};
-        private double[] ZakuskaWeight = {50, 200};
-        private double[] FirstWeight = {200, 600};
-        private double[] SecondWeight = {200, 350};
-        private double[] GarnirWeight = {150, 350};
+        private Human _human;
+        private double[] _kashaWeight = {200, 600};
+        private double[] _zakuskaWeight = {50, 200};
+        private double[] _firstWeight = {200, 600};
+        private double[] _secondWeight = {200, 350};
+        private double[] _garnirWeight = {150, 350};
 
 
         public MenuMaker(DishList dishList,Human human)
         {
-            Human = human;
+            _human = human;
             DishList = dishList;
             MenuList = new DishList(3);
         }
@@ -38,25 +34,16 @@ namespace Dietpitanie
                 int second = rnd.Next(0, 10000000);
                 second = second % DishList.LengthListDish(1);
                 dish2 = DishList.GetDish(1, second);
-                double calories = 0.85 * 3 / 8 * Human.Calories;
-                double proteins = 0.85 * 3 / 8 * Human.Proteins;
-                double fats = 0.85 * 3 / 8 * Human.Fats;
-                double carbohydrates = 0.85 * 3 / 8 * Human.Carbohydrates;
+                double calories = 0.85 * 3 / 8 * _human.Calories;
                 double weight1, weight2;
-                double calories1, calories2;
-                double carbo1, carbo2;
                 weight1 = calories * 0.7 / dish1.Calories * 100;
                 weight2 = calories * 0.3 / dish2.Calories * 100;
-                calories1 = weight1 / 100 * dish1.Calories;
-                calories2 = weight2 / 100 * dish2.Calories;
-                carbo1 = weight1 / 100 * dish1.Carbohydrates;
-                carbo2 = weight2 / 100 * dish2.Carbohydrates;
-                if ((weight1 < KashaWeight[1]) && (weight1 > KashaWeight[0]) && (weight2 < ZakuskaWeight[1]) &&
-                    (weight2 > ZakuskaWeight[0]))
+                if ((weight1 < _kashaWeight[1]) && (weight1 > _kashaWeight[0]) && (weight2 < _zakuskaWeight[1]) &&
+                    (weight2 > _zakuskaWeight[0]))
                 {
                     good = 1;
-                    dish1.Weight = weight1;
-                    dish2.Weight = weight2;
+                    dish1.Weight = Math.Round(weight1,MidpointRounding.AwayFromZero);
+                    dish2.Weight = Math.Round(weight2, MidpointRounding.AwayFromZero);
                     MenuList.AddDish(dish1,0);
                     MenuList.AddDish(dish2, 0);
                 }
@@ -76,25 +63,16 @@ namespace Dietpitanie
                 int second = rnd.Next(0, 10000000);
                 second = second % DishList.LengthListDish(3);
                 dish2 = DishList.GetDish(3, second);
-                double calories = 0.85 * 3 / 8 * Human.Calories;
-                double proteins = 0.85 * 3 / 8 * Human.Proteins;
-                double fats = 0.85 * 3 / 8 * Human.Fats;
-                double carbohydrates = 0.85 * 3 / 8 * Human.Carbohydrates;
+                double calories = 0.85 * 3 / 8 * _human.Calories;
                 double weight1, weight2;
-                double calories1, calories2;
-                double carbo1, carbo2;
                 weight1 = calories * 0.3 / dish1.Calories * 100;
                 weight2 = calories * 0.7 / dish2.Calories * 100;
-                calories1 = weight1 / 100 * dish1.Calories;
-                calories2 = weight2 / 100 * dish2.Calories;
-                carbo1 = weight1 / 100 * dish1.Carbohydrates;
-                carbo2 = weight2 / 100 * dish2.Carbohydrates;
-                if ((weight1 < FirstWeight[1]) && (weight1 > FirstWeight[0]) && (weight2 < SecondWeight[1]) &&
-                    (weight2 > SecondWeight[0]))
+                if ((weight1 < _firstWeight[1]) && (weight1 > _firstWeight[0]) && (weight2 < _secondWeight[1]) &&
+                    (weight2 > _secondWeight[0]))
                 {
                     good = 1;
-                    dish1.Weight = weight1;
-                    dish2.Weight = weight2;
+                    dish1.Weight = Math.Round(weight1, MidpointRounding.AwayFromZero);
+                    dish2.Weight = Math.Round(weight2, MidpointRounding.AwayFromZero);
                     MenuList.AddDish(dish1, 1);
                     MenuList.AddDish(dish2, 1);
                 }
@@ -114,25 +92,16 @@ namespace Dietpitanie
                 int second = rnd.Next(0, 10000000);
                 second = second % DishList.LengthListDish(1);
                 dish2 = DishList.GetDish(1, second);
-                double calories = 0.85 * 3 / 8 * Human.Calories;
-                double proteins = 0.85 * 3 / 8 * Human.Proteins;
-                double fats = 0.85 * 3 / 8 * Human.Fats;
-                double carbohydrates = 0.85 * 3 / 8 * Human.Carbohydrates;
+                double calories = 0.85 * 3 / 8 * _human.Calories;
                 double weight1, weight2;
-                double calories1, calories2;
-                double carbo1, carbo2;
                 weight1 = calories * 0.7 / dish1.Calories * 100;
                 weight2 = calories * 0.3 / dish2.Calories * 100;
-                calories1 = weight1 / 100 * dish1.Calories;
-                calories2 = weight2 / 100 * dish2.Calories;
-                carbo1 = weight1 / 100 * dish1.Carbohydrates;
-                carbo2 = weight2 / 100 * dish2.Carbohydrates;
-                if ((weight1 < GarnirWeight[1]) && (weight1 > GarnirWeight[0]) && (weight2 < ZakuskaWeight[1]) &&
-                    (weight2 > ZakuskaWeight[0]))
+                if ((weight1 < _garnirWeight[1]) && (weight1 > _garnirWeight[0]) && (weight2 < _zakuskaWeight[1]) &&
+                    (weight2 > _zakuskaWeight[0]))
                 {
                     good = 1;
-                    dish1.Weight = weight1;
-                    dish2.Weight = weight2;
+                    dish1.Weight = Math.Round(weight1, MidpointRounding.AwayFromZero);
+                    dish2.Weight = Math.Round(weight2, MidpointRounding.AwayFromZero);
                     MenuList.AddDish(dish1, 2);
                     MenuList.AddDish(dish2, 2);
                 }
