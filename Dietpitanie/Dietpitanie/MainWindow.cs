@@ -26,6 +26,8 @@ namespace Dietpitanie
 
         public void MainWindowLoad(object sender, EventArgs e)
         {
+            toEatFoodLabel.Text = "";
+            toRejectFoodLabel.Text = "";
             suggestNameLabel.Text = "";
             suggestWeightLabel.Text = "";
             weightLabel.Text = "";
@@ -34,6 +36,17 @@ namespace Dietpitanie
             resultLabel.Text = "";
             caloriesLabel.Text = "";
             checkToEatWeight.Text = "";
+            label21.Text = "";
+            label22.Text = "";
+            label23.Text = "";
+            label24.Text = "";
+            tabPage1.Enabled = false;
+            tabPage2.Enabled = false;
+            tabPage3.Enabled = false;
+            tabPage4.Enabled = false;
+            tabPage5.Enabled = false;
+            tabPage7.Enabled = false;
+            tabPage8.Enabled = false;
             buttonCalculate.Enabled = true;
             _human = new Human();
             _dbController = new DbController();
@@ -702,6 +715,14 @@ namespace Dietpitanie
                 File.Create(login.Text).Close();
                 _login = login.Text;
                 MessageBox.Show(@"Вы успешно зарегистрировались");
+                tabPage1.Enabled = true;
+                tabPage2.Enabled = true;
+                tabPage3.Enabled = true;
+                tabPage4.Enabled = true;
+                tabPage5.Enabled = true;
+                tabPage7.Enabled = true;
+                tabPage8.Enabled = true;
+                tabPage6.Enabled = false;
             }
 
         }
@@ -787,7 +808,14 @@ namespace Dietpitanie
                     item.SubItems.Add((_food.Carbohydrates * _food.Weight * 0.01).ToString());
                     toRejectListView.Items.Add(item);
                 }
-
+                tabPage1.Enabled = true;
+                tabPage2.Enabled = true;
+                tabPage3.Enabled = true;
+                tabPage4.Enabled = true;
+                tabPage5.Enabled = true;
+                tabPage7.Enabled = true;
+                tabPage8.Enabled = true;
+                tabPage6.Enabled = false;
                 MessageBox.Show(@"Вы успешно авторизовались");
                 GenerateSuggestion();
                 if (_human.SuggestFoodList.Count > 0)
