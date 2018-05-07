@@ -362,12 +362,33 @@ namespace Dietpitanie
 
         private void PrintMacroelements()
         {
+
             eatProteins.Text = _human.EatProteins.ToString();
             eatFats.Text = _human.EatFats.ToString();
             eatCarbohydrates.Text = _human.EatCarbohydrates.ToString();
             eatCalories.Text = _human.EatCalories.ToString();
             toEatWeight.Clear();
+            if (_human.LeftCarbohydrates < 0)
+            {
+                eatCarbohydrates.BackColor = System.Drawing.Color.Red;
+                toNormCarbohydrates.BackColor = System.Drawing.Color.Red;
+            }    
+            else
+            {
+                eatCarbohydrates.BackColor = System.Drawing.Color.Black;
+                toNormCarbohydrates.BackColor = System.Drawing.Color.Black;
+            }
 
+            if (_human.LeftCalories < 0)
+            {
+                eatCalories.BackColor = System.Drawing.Color.Red;
+                toNormCalories.BackColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                eatCalories.BackColor = System.Drawing.Color.Black;
+                toNormCalories.BackColor = System.Drawing.Color.Black;
+            }
             toNormCalories.Text = _human.LeftCalories.ToString();
             toNormProteins.Text = _human.LeftProteins.ToString();
             toNormFats.Text = _human.LeftFats.ToString();
