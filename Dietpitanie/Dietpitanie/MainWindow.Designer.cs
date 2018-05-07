@@ -32,6 +32,7 @@ namespace Dietpitanie
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.resultLabel = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -160,6 +161,7 @@ namespace Dietpitanie
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -170,6 +172,7 @@ namespace Dietpitanie
             this.tabPage5.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1544,6 +1547,7 @@ namespace Dietpitanie
             // tabPage9
             // 
             this.tabPage9.BackColor = System.Drawing.Color.Black;
+            this.tabPage9.Controls.Add(this.richTextBox1);
             this.tabPage9.Location = new System.Drawing.Point(4, 25);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
@@ -1689,6 +1693,16 @@ namespace Dietpitanie
             this.radioButton1.Text = "Похудение";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.Black;
+            this.richTextBox1.ForeColor = System.Drawing.Color.White;
+            this.richTextBox1.Location = new System.Drawing.Point(6, 6);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(960, 500);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1718,6 +1732,7 @@ namespace Dietpitanie
             this.tabPage5.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -1855,6 +1870,7 @@ namespace Dietpitanie
         private ColumnHeader columnHeader21;
         private ColumnHeader columnHeader22;
         private TabPage tabPage9;
+        private RichTextBox richTextBox1;
     }
 }
 
